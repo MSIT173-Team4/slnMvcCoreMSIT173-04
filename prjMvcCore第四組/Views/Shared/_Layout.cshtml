@@ -1,50 +1,164 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - prjMvcCore第四組</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/prjMvcCore第四組.styles.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>@ViewData["Title"]友料後台管理</title>
+
+    <!-- Sneat 圖示庫 -->
+    <link rel="stylesheet" href="~/theme/vendor/fonts/boxicons.css" />
+
+    <!-- Sneat CSS -->
+    <link rel="stylesheet" href="~/theme/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="~/theme/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="~/theme/css/demo.css" />
+
+    <!-- Sneat第三方CSS -->
+    <link rel="stylesheet" href="~/theme/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <!-- Helpers腳本 -->
+    <script src="~/theme/vendor/js/helpers.js"></script>
+    <script src="~/theme/js/config.js"></script>
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">prjMvcCore第四組</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+
+            <!-- 1. 左側全組導覽選單 -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a asp-controller="Home" asp-action="Index" class="app-brand-link">
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">友料美食生活</span>
+                    </a>
                 </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    <!-- 總覽  -->
+                    <li class="menu-item active">
+                        <a asp-controller="Home" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div>後台儀表板</div>
+                        </a>
+                    </li>
+
+                    <!-- 會員管理系統 -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">會員管理</span>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="Members" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user-account"></i>
+                            <div>會員資料管理</div>
+                        </a>
+                    </li>
+
+                    <!-- 食譜與食材庫存系統 -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">食譜與庫存</span>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="Recipes" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-restaurant"></i>
+                            <div>食譜管理</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="UserPantry" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-fridge"></i>
+                            <div>個人冰箱庫存</div>
+                        </a>
+                    </li>
+
+                    <!-- 討論串社群系統 -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">討論區社群</span>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="Forum" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-conversation"></i>
+                            <div>討論串文章管理</div>
+                        </a>
+                    </li>
+
+                    <!-- 美食地圖系統 -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">美食地圖</span>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="FoodMap" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-map-alt"></i>
+                            <div>餐廳與地圖管理</div>
+                        </a>
+                    </li>
+
+                    <!-- 商城系統 -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">商城系統</span>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="Mall" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-store-alt"></i>
+                            <div>商品與訂單管理</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- / Sidebar -->
+            <!-- 2. 右側主要內容頁 -->
+            <div class="layout-page">
+
+                <!-- 頂部導覽列 -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <span class="fw-semibold">友料美食生活料理平台- 全組共用後台</span>
+                    </div>
+                </nav>
+                <!-- / Navbar -->
+                <!-- 內容區塊 -->
+                <div class="content-wrapper">
+
+                    <!-- 各組員 Controller 的子頁面灌在這裡 -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        @RenderBody()
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                            <div class="mb-2 mb-md-0">
+                                © 2026 - 友料美食生活料理平台 MSIT170第四組開發團隊. All rights reserved.
+                            </div>
+                        </div>
+                    </footer>
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+        </div>
+
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - prjMvcCore第四組 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Sneat JS -->
+    <script src="~/theme/vendor/libs/jquery/jquery.js"></script>
+    <script src="~/theme/vendor/libs/popper/popper.js"></script>
+    <script src="~/theme/vendor/js/bootstrap.js"></script>
+    <script src="~/theme/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/theme/vendor/js/menu.js"></script>
+
+    <!-- Sneat Main JS -->
+    <script src="~/theme/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace prjMvcCore第四組.Models
 {
     public partial class TTrip
     {
+        [Key]
         public long FTripId { get; set; }
 
         public int FUsersId { get; set; }

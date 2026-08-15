@@ -1,0 +1,95 @@
+@model IEnumerable<prjMvcCoreMSIC173.Models.CRestaurantWrap>
+
+@{
+    ViewData["Title"] = "FoodMapList";
+}
+
+<h1 class="text-center">推薦店家一覽表</h1>
+<form method="post">
+    @Html.TextBox("txtkeyword", "", new { @class = "form-control" })<input type="submit" value="查詢" />
+</form>
+<p>
+    <a asp-action="Create">新增推薦商家</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                序號
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FBusinessStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FIsRecommend)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCreatedTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+
+                    <td>
+                        @count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Restaurant.FCategory.FCategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FBusinessStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FIsRecommend)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FCreatedTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FUpdatedTime)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.FRestaurantId" class="btn btn-success">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.FRestaurantId" class="btn btn-danger" onclick="return confirm('確定要刪除嗎?')">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        
+    }
+</tbody>
+</table>

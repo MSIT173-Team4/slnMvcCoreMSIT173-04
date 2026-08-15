@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace prjMvcCore第四組.Models
 {
     public partial class TRestaurantImage
     {
+        [Key]
         public long FImageId { get; set; }
 
         public long FRestaurantId { get; set; }

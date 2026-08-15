@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace prjMvcCore第四組.Models
 {
 
     public partial class TMapFavorite
     {
+        [Key]
         public long FFavoriteId { get; set; }
 
         public int FUsersId { get; set; }

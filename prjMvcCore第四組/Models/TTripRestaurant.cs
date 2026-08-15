@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace prjMvcCore第四組.Models
 {
 
     public partial class TTripRestaurant
     {
+        [Key]
         public long FTripRestaurantId { get; set; }
 
         public long FTripId { get; set; }

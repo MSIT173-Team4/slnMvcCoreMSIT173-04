@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-namespace prjMvcCore第四組.Models
+
+namespace prjMvcCore第四組.Models;
+
+public partial class TRestaurantCategory
 {
-    public partial class TRestaurantCategory
-    {
-        [Key]
-        public long FCategoryId { get; set; }
+    public long FCategoryId { get; set; }
 
-        public string FCategoryName { get; set; } = null!;
+    public string FCategoryName { get; set; } = null!;
 
-        public string? FDescription { get; set; }
+    public string? FDescription { get; set; }
 
-        public DateTime FCreatedTime { get; set; }
+    public DateTime FCreatedTime { get; set; }
 
-        public virtual ICollection<TRestaurant> TRestaurants { get; set; } = new List<TRestaurant>();
-    }
+    public virtual ICollection<TRestaurant> TRestaurants { get; set; } = new List<TRestaurant>();
 }

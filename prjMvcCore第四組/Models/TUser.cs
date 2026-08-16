@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace prjMvcCore第四組.Models
 {
+
     public partial class TUser
     {
         public int FId { get; set; }
@@ -31,24 +32,27 @@ namespace prjMvcCore第四組.Models
 
         public DateTime? FLastLogin { get; set; }
 
-        public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
-
-        public virtual ICollection<MapFavorite> MapFavorites { get; set; } = new List<MapFavorite>();
-
-        public virtual ICollection<MessageTable> MessageTables { get; set; } = new List<MessageTable>();
-
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
-        public virtual ICollection<PostTable> PostTables { get; set; } = new List<PostTable>();
-
-        public virtual ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
-
-        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
-
-        public virtual ICollection<TApply> TApplies { get; set; } = new List<TApply>();
-
         public virtual ICollection<TSeller> TSellers { get; set; } = new List<TSeller>();
+        public virtual ICollection<TApply> TApplies { get; set; } = new List<TApply>();
+        public virtual ICollection<TProductFavorite> TProductFavorites { get; set; } = new List<TProductFavorite>();
 
-        public virtual ICollection<Trip> Trips { get; set; } = new List<Trip>();
+
+
+        public virtual ICollection<TOrder> TOrders { get; set; } = new List<TOrder>();
+
+        public virtual ICollection<TMapFavorite> TMapFavorites { get; set; } = new List<TMapFavorite>();
+
+        public virtual ICollection<TProductReview> TProductReviews { get; set; } = new List<TProductReview>();
+        public virtual ICollection<TMessageTable> TMessageTables { get; set; } = new List<TMessageTable>();
+
+        public virtual ICollection<TShoppingCart> TShoppingCarts { get; set; } = new List<TShoppingCart>();
+        public virtual ICollection<TPostTable> TPostTables { get; set; } = new List<TPostTable>();
+
+        public virtual ICollection<TRecipeFavorite> TRecipeFavorites { get; set; } = new List<TRecipeFavorite>();
+
+
+
+
+        public virtual ICollection<TTrip> TTrips { get; set; } = new List<TTrip>();
     }
 }

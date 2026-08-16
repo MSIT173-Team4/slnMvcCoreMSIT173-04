@@ -22,10 +22,10 @@ namespace prjMvcCore第四組.Models
 
         public virtual TUser FUser { get; set; } = null!;
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<TOrder> TOrders { get; set; } = new List<TOrder>();
 
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<TProduct> TProducts { get; set; } = new List<TProduct>();
 
-        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
+        public virtual ICollection<TShoppingCart> TShoppingCartS { get; set; } = new List<TShoppingCart>();
     }
 }

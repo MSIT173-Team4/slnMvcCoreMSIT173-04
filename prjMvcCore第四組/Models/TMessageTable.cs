@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+namespace prjMvcCore第四組.Models
+{
+
+    public partial class TMessageTable
+    {
+        public int FMessageId { get; set; }
+
+        public int FPostId { get; set; }
+
+        public int FUserId { get; set; }
+
+        public int FReplyMessageId { get; set; }
+
+        public string FMessageContent { get; set; } = null!;
+
+        public int FLikes { get; set; }
+
+        public int FViews { get; set; }
+
+        public DateTime FMessageDate { get; set; }
+
+        public byte FMessageState { get; set; }
+
+        public virtual TPostTable FPost { get; set; } = null!;
+
+        public virtual TUser FUser { get; set; } = null!;
+    }
+}

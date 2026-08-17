@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using prjMvcCore第四組.Controllers;
+using prjMvcCore第四組.Models;
 using prjMvcCore第四組.ViewModels;
 using prjMvcCore第四組.Models;
 

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace prjMvcCore第四組.Models
+namespace prjMvcCore第四組.Models;
+
+public partial class TRecipeLike
 {
+    public int FUserId { get; set; }
 
-    public partial class TRecipeLike
-    {
-        public int FUserId { get; set; }
+    public int FRecipeId { get; set; }
 
-        public int FRecipeId { get; set; }
+    public DateTime FCreatedAt { get; set; }
 
-        public DateTime FCreatedAt { get; set; }
+    public virtual TRecipe FRecipe { get; set; } = null!;
 
-        public virtual TRecipe FRecipe { get; set; } = null!;
-    }
+    public virtual TUser FUser { get; set; } = null!;
 }

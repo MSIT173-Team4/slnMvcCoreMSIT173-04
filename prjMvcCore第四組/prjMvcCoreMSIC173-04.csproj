@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\CRestaurantWrap\**" />
+    <Compile Remove="Views\TRestaurant\**" />
+    <Content Remove="Views\CRestaurantWrap\**" />
+    <Content Remove="Views\TRestaurant\**" />
+    <EmbeddedResource Remove="Views\CRestaurantWrap\**" />
+    <EmbeddedResource Remove="Views\TRestaurant\**" />
+    <None Remove="Views\CRestaurantWrap\**" />
+    <None Remove="Views\TRestaurant\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -20,8 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\CRestaurantWrap\" />
-    <Folder Include="Views\TRestaurant\" />
+    <Folder Include="Views\CTripWrap\" />
   </ItemGroup>
 
 </Project>

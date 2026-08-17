@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace prjMvcCore第四組.Models;
+namespace prjMvcCoreMSIC173-04.Models;
 
 public partial class TRecipeLike
 {

@@ -26,7 +26,7 @@ namespace prjMvcCore第四組.Controllers
             foreach (var black in datas)
             {
                 CTripWrap blue = new CTripWrap() { Trip = black };
-                if (blue.StatusEnum != CTripWrap.TripStatus.已結束 && blue.FCreatedTime.AddSeconds(30) <= now)
+                if (blue.StatusEnum != CTripWrap.TripStatus.已結束 && blue.FCreatedTime.AddMinutes(2) <= now)
                 {
                     blue.StatusEnum = CTripWrap.TripStatus.已結束;
                     blue.Trip.FUpdatedTime = now;
@@ -48,6 +48,7 @@ namespace prjMvcCore第四組.Controllers
         {
             MidprjDb2Context db = new MidprjDb2Context();
             CTripWrap cTrip = new CTripWrap();
+            //載入TRestaurant 資料在TTrip.FDescription內
             cTrip.Restaurants = db.TRestaurants.Select(t => new SelectListItem
             {
                 Value = t.FRestaurantId.ToString(),
@@ -82,7 +83,7 @@ namespace prjMvcCore第四組.Controllers
                 {
                     var tripRest = new TTripRestaurant
                     {
-                        FTripId = cTrip.Trip.FTripId,
+                        FTripId = cTrip.FTripId,
                         FRestaurantId = restId,
                         FSortOrder = sortOrder++,
                         FCreatedTime = DateTime.Now
@@ -106,9 +107,12 @@ namespace prjMvcCore第四組.Controllers
         public IActionResult Delete(int? id)
         {
             MidprjDb2Context db = new MidprjDb2Context();
+            var tr = db.TTripRestaurants.Where(r => r.FTripId == id).ToList();
+            db.TTripRestaurants.RemoveRange(tr);
             TTrip trip = db.TTrips.FirstOrDefault(t => t.FTripId == id);
             if (id != null)
             {
+                
                 db.TTrips.Remove(trip);
                 db.SaveChanges();
             }
@@ -132,7 +136,8 @@ namespace prjMvcCore第四組.Controllers
                 Value = t.FRestaurantId.ToString(),
                 Text = t.FName
             }).ToList();
-            return View();
+            cTrip.Trip = Trip;
+            return View(cTrip);
         }
 
         [HttpPost]
@@ -140,14 +145,7 @@ namespace prjMvcCore第四組.Controllers
         {
             MidprjDb2Context db = new MidprjDb2Context();
 
-            if (submitButton == "儲存為草稿")
-            {
-                cTrip.StatusEnum = CTripWrap.TripStatus.草稿;
-            }
-            else if (submitButton == "新增行程")
-            {
-                cTrip.StatusEnum = CTripWrap.TripStatus.已完成;
-            }
+            
 
             TTrip trip = db.TTrips.FirstOrDefault(t => t.FTripId == cTrip.FTripId);
             if (trip != null)

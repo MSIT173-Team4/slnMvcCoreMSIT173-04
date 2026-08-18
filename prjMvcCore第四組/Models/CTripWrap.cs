@@ -28,27 +28,71 @@ namespace prjMvcCore第四組.Models
         }
 
         [Key]
-        public long FTripId { get; set; }
+        public long FTripId
+        {
+            get { return _trip.FTripId; }
+            set { _trip.FTripId = value; }
+        }
 
-        public int FUsersId { get; set; }
+        public int FUsersId
+        {
+            get { return _trip.FUsersId; }
+            set { _trip.FUsersId = value; }
+        }
         [DisplayName("行程名稱")]
-        public string FTripName { get; set; }
+        public string FTripName
+        {
+            get { return _trip.FTripName; }
+            set { _trip.FTripName = value; }
+        }
         [DisplayName("行程日期")]
-        public DateOnly FTripDate { get; set; }
+        public DateOnly FTripDate
+        {
+            get { return _trip.FTripDate; }
+            set { _trip.FTripDate = value; }
+        }
         [DisplayName("開始時間")]
-        public TimeOnly? FStartTime { get; set; }
+        public TimeOnly? FStartTime
+        {
+            get { return _trip.FStartTime; }
+            set { _trip.FStartTime = value; }
+        }
         [DisplayName("行程描述")]
-        public string? FDescription { get; set; }
+        public string? FDescription
+        {
+            get { return _trip.FDescription; }
+            set { _trip.FDescription = value; }
+        }
         [DisplayName("行程規劃狀態")]
-        public string FStatus { get; set; } = null!;
+        public string FStatus
+        {
+            get { return _trip.FStatus; }
+            set { _trip.FStatus = value; }
+        } 
         [DisplayName("新增日期")]
-        public DateTime FCreatedTime { get; set; }
+        public DateTime FCreatedTime
+        {
+            get { return _trip.FCreatedTime; }
+            set { _trip.FCreatedTime = value; }
+        }
         [DisplayName("最後更新日期")]
-        public DateTime? FUpdatedTime { get; set; }
+        public DateTime? FUpdatedTime
+        {
+            get { return _trip.FUpdatedTime; }
+            set { _trip.FUpdatedTime = value; }
+        }
 
-        public virtual TUser FUsers { get; set; } 
+        public virtual TUser FUsers
+        {
+            get { return _trip.FUsers; }
+            set { _trip.FUsers = value; }
+        }
 
-        public virtual ICollection<TTripRestaurant> TTripRestaurants { get; set; } = new List<TTripRestaurant>();
+        public virtual ICollection<TTripRestaurant> TTripRestaurants
+        {
+            get ; 
+            set ; 
+        } = new List<TTripRestaurant>();
 
         public TripStatus StatusEnum
         {

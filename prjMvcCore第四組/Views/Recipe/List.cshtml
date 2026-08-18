@@ -1,0 +1,107 @@
+@model IEnumerable<prjMvcCore第四組.Models.CRecipeWrap>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.recipe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAuthorUserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDefaultServings)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCoverImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FTotalCookingMinutes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FViewCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FIsAiGenerated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FUpdatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.recipe)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FAuthorUserId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FDefaultServings)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FCoverImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FTotalCookingMinutes)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FViewCount)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FIsAiGenerated)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FCreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FUpdatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Photo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FRecipeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FRecipeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FRecipeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

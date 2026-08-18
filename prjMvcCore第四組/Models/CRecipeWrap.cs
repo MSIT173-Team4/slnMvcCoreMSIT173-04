@@ -91,11 +91,7 @@ namespace prjMvcCore第四組.Models
             set { _recipe.FUpdatedAt = value; }
         }
         [DisplayName("上傳封面圖片")]
-        public IFormFile? Photo
-        {
-            get;
-            set;
-        }
+        public IFormFile? Photo { get; set; }
     }
 
 }

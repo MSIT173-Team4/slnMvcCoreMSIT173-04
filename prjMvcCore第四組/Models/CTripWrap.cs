@@ -32,7 +32,7 @@ namespace prjMvcCore第四組.Models
 
         public int FUsersId { get; set; }
         [DisplayName("行程名稱")]
-        public string FTripName { get; set; } = null!;
+        public string FTripName { get; set; }
         [DisplayName("行程日期")]
         public DateOnly FTripDate { get; set; }
         [DisplayName("開始時間")]

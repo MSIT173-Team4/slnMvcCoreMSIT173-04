@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using prjMvcCoreMSIC173.ViewModels;
 using prjMvcCore第四組.Models;
 
 namespace prjMvcCoreMSIC173.Controllers
@@ -7,13 +9,55 @@ namespace prjMvcCoreMSIC173.Controllers
 {
     public IActionResult Index()
     {
-        MidprjDb2Context db = new MidprjDb2Context();
-        var data = from t in db.TApplies select t;
-        return View(data);
-    }
+
+            MidprjDb2Context db = new MidprjDb2Context();
+
+            var data = db.TApplies.Include(x => x.FUser).ToList();
+            var statuses = db.TStatuses.ToDictionary(x => x.FId, x => x.FName);
+
+            ViewBag.status = statuses;
+
+            return View(data);
+        }
     public IActionResult Create()
         {
             return View();
         }
-}
+        [HttpPost]
+    public IActionResult Create(AddApplyViewModel a)
+        {
+            MidprjDb2Context db = new MidprjDb2Context();
+            if (a == null) return RedirectToAction("Create");
+            TApply apply = new TApply();
+            apply.FUserId = a.FUserId;
+            apply.FStoreName = a.FStoreName;
+            apply.FStoreDescription = a.FStoreDescription;
+            apply.FIdNum = a.FIdNum;
+            apply.FIdCard = a.FIdCard;
+            apply.FStatus = a.FStatus;
+            apply.FApplyDate = DateTime.Now;
+            db.TApplies.Add(apply);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Details(int id)
+        {
+            MidprjDb2Context db = new MidprjDb2Context();
+
+            var apply = db.TApplies
+                .Include(x => x.FUser)
+                .FirstOrDefault(x => x.FId == id);
+
+            if (apply == null)
+            {
+                return NotFound();
+            }
+
+            var status = db.TStatuses.ToList();
+
+            ViewBag.status = status;
+
+            return View(apply);
+        }
+    }
 }

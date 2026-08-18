@@ -59,5 +59,40 @@ namespace prjMvcCoreMSIC173.Controllers
 
             return View(apply);
         }
+        public IActionResult Reject(int id)
+        {
+            MidprjDb2Context db = new MidprjDb2Context();
+            var apply = db.TApplies.FirstOrDefault(x => x.FId == id);
+
+            if (apply != null)
+            {
+                apply.FStatus = 3;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public IActionResult Approve(int id)
+        {
+            MidprjDb2Context db = new MidprjDb2Context();
+            var apply = db.TApplies.FirstOrDefault(x => x.FId == id);
+
+            if (apply == null)
+            {
+                return NotFound();
+            }
+
+            apply.FStatus = 2;
+            db.SaveChanges();
+            
+            TSeller seller = new TSeller();
+            seller.FUserId = apply.FUserId;
+            seller.FName = apply.FStoreName;
+            seller.FDescription = apply.FStoreDescription;
+            seller.FStatus = 4;
+            seller.FApplyDate = DateTime.Now;
+            db.TSellers.Add(seller);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

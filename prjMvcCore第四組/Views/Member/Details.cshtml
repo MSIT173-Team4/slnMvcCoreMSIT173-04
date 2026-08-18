@@ -1,0 +1,159 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<div class="container mt-4">
+
+    <!-- User 資料 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+
+                <!-- 左邊 Profile Image -->
+                <div class="col-md-4 text-center">
+                    <img src="~/images/default-user.png"
+                         class="rounded-circle img-fluid"
+                         style="width:180px;height:180px;object-fit:cover;"
+                         alt="Profile Image" />
+                </div>
+
+                <!-- 右邊 User 資料 -->
+                <div class="col-md-8">
+                    <h2>@ViewBag.User.FNickname</h2>
+
+                    <p>
+                        <strong>帳號：</strong>
+                        @ViewBag.User.FUsername
+                    </p>
+
+                    <p>
+                        <strong>Email：</strong>
+                        @ViewBag.User.FEmail
+                    </p>
+
+                    <p>
+                        <strong>電話：</strong>
+                        @ViewBag.User.FPhone
+                    </p>
+
+                    <p>
+                        <strong>地址：</strong>
+                        @ViewBag.User.FAddress
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="profileTab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active"
+                    id="post-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#post"
+                    type="button"
+                    role="tab">
+                貼文
+            </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link"
+                    id="recipe-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#recipe"
+                    type="button"
+                    role="tab">
+                食譜
+            </button>
+        </li>
+
+    </ul>
+
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-3">
+
+        <!-- 貼文 -->
+        <div class="tab-pane fade show active"
+             id="post"
+             role="tabpanel">
+
+            @if (ViewBag.Post != null && ViewBag.Post.Count > 0)
+            {
+                foreach (var post in ViewBag.Post)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                @post.FTitle
+                            </h5>
+
+                            <p class="card-text">
+                                @post.FContent
+                            </p>
+
+                            <small class="text-muted">
+                                @post.FCreateTime
+                            </small>
+
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted">目前沒有貼文</p>
+            }
+
+        </div>
+
+
+        <!-- 食譜 -->
+        <div class="tab-pane fade"
+             id="recipe"
+             role="tabpanel">
+
+            @if (ViewBag.Recipe != null && ViewBag.Recipe.Count > 0)
+            {
+                foreach (var recipe in ViewBag.Recipe)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                @recipe.FTitle
+                            </h5>
+
+                            <p class="card-text">
+                                @recipe.FDescription
+                            </p>
+
+                            <small class="text-muted">
+                                @recipe.FCreateTime
+                            </small>
+
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted">目前沒有食譜</p>
+            }
+
+        </div>
+
+    </div>
+
+</div>

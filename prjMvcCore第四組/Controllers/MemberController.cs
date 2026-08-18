@@ -55,10 +55,10 @@ namespace prjMvcCore第四組.Controllers
             TUser data = db.TUsers.FirstOrDefault(t => t.FId == id);
             TPostTable pdata = db.TPostTables.FirstOrDefault(t => t.FUserId == id);
             TRecipe rdata = db.TRecipes.FirstOrDefault(t => t.FAuthorUserId == id);
-            if (data == null||pdata==null||rdata==null) return RedirectToAction("Index");
-            ViewBag.user = data;
-            ViewBag.post = pdata;
-            ViewBag.recipe = rdata;
+            if (data == null) return RedirectToAction("Index");
+            ViewBag.User = data;
+            ViewBag.Post = pdata;
+            ViewBag.Recipe = rdata;
             return View();
     }
         private byte[] HashPassword(string password)

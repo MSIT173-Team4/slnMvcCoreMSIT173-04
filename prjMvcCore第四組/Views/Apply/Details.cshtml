@@ -105,23 +105,55 @@
             <!-- 其他申請資料 -->
             <hr />
 
-            <h5 class="mb-3">申請內容</h5>
-
             <div class="row">
 
-                <div class="col-12 mb-3">
-                    <label class="fw-bold">申請編號</label>
-                    <div class="form-control bg-light">
-                        @Model.FId
+                <!-- 左邊：身分證 -->
+                <div class="col-md-6 mb-3">
+                    <label class="fw-bold d-block mb-2">身分證</label>
+
+                    <div class="border rounded p-3 text-center bg-light">
+                        <img src="~/image/@Model.FIdCard"
+                             alt="身分證"
+                             class="img-fluid"
+                             style="max-height: 300px;" />
                     </div>
                 </div>
 
-                <!--
-                如果 TApply 還有其他欄位，
-                可以繼續在這裡放。
-                -->
 
-            </div>
+                <!-- 右邊：申請資訊 -->
+                <div class="col-md-6 mb-3">
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="fw-bold">用戶名</label>
+
+                        <div class="form-control bg-light">
+                            @Model.FUser?.FUsername
+                        </div>
+                    </div>
+
+
+                    <!-- 身分證字號 -->
+                    <div class="mb-3">
+                        <label class="fw-bold">身分證字號</label>
+
+                        <div class="form-control bg-light">
+                            @Model.FIdNum
+                        </div>
+                    </div>
+
+
+                    <!-- 商家敘述 -->
+                    <div class="mb-3">
+                        <label class="fw-bold">商家敘述</label>
+
+                        <div class="form-control bg-light"
+                             style="min-height: 150px;">
+                            @Model.FStoreDescription
+                        </div>
+                    </div>
+
+                </div>
 
         </div>
 

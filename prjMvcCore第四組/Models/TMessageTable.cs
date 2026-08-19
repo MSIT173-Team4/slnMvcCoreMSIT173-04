@@ -11,13 +11,11 @@ public partial class TMessageTable
 
     public int FUserId { get; set; }
 
-    public int FReplyMessageId { get; set; }
+    public int? FReplyMessageId { get; set; }
 
     public string FMessageContent { get; set; } = null!;
 
     public int FLikes { get; set; }
-
-    public int FViews { get; set; }
 
     public DateTime FMessageDate { get; set; }
 

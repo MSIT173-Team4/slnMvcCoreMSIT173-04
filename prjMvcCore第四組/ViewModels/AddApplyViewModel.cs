@@ -10,6 +10,6 @@ namespace prjMvcCoreMSIC173.ViewModels
         public string FIdNum { get; set; }
         public string FIdCard { get; set; }
         public int FStatus { get; set; }
-        public IFormFile img { get; set; }
+        public IFormFile photo { get; set; }
     }
 }

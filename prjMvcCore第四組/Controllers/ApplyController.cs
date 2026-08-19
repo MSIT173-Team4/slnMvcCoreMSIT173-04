@@ -33,15 +33,15 @@ namespace prjMvcCoreMSIC173.Controllers
         {
             MidprjDb2Context db = new MidprjDb2Context();
             if (a == null) return RedirectToAction("Create");
-            if(a.img != null && a.img.Length > 0)
+            if(a.photo != null)
             {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(a.img.FileName);
+                string fileName = Guid.NewGuid().ToString() +".jpg";
                 string filePath = Path.Combine(_env.WebRootPath, "image","Apply", fileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    a.img.CopyTo(stream);
+                    a.photo.CopyTo(stream);
                 }
-                a.FIdCard = "/image/Apply/" + fileName;
+                a.FIdCard = fileName;
             }
             TApply apply = new TApply();
             apply.FUserId = a.FUserId;

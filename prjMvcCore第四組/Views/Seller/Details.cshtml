@@ -2,45 +2,114 @@
 
 @{
     ViewData["Title"] = "Details";
+    var products = ViewBag.Products
+    as IEnumerable<prjMvcCore第四組.Models.TProduct>;
 }
 
-<h1>Seller Details</h1>
-<div class="container mt-4">
-    <div>
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-m4-4 ">
-                        <img src="~/image/Member/@Model.FUser.FProfileImg" /
-                        class="rounded-circle img-fluid"
-                        style="width:180px; height:180px;object-fit:cover"
-                        alt="Profile Image"
-                        >
-                    </div>
-                    <div class="col-m4-8">
-                   
-                        
-                               <h2>
-                                @Html.DisplayFor(Model=>Model.FName)
-                                </h2>
-                            <p>
-                                <strong>用戶名:</strong>
-                                @Html.DisplayFor(Model=>Model.FUser.FUsername)
-                            </p>
-                            <p>
-                                <strong>審核日期:</strong>
-                                @Html.DisplayFor(Model=>Model.FApplyDate)
-                            </p>
-                            <p>
-                            <strong>商家描述</strong>
-                            @Html.DisplayFor(Model=>Model.FDescription)
-                            </p>
-             
-                    </div>
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Seller Details</h1>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            ← 返回列表
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-4">
+<div class="row align-items-center">
+
+                <!-- 左邊：頭像 -->
+                <div class="col-md-4 text-center">
+
+                    <img src="~/image/Member/@Model.FUser?.FProfileImg"
+                         class="rounded-circle shadow-sm"
+                         style="width:180px;
+                                height:180px;
+                                object-fit:cover;"
+                         alt="Profile Image" />
+
                 </div>
+
+
+                <!-- 中間：基本資料 -->
+                <div class="col-md-5">
+
+                    <h2 class="mb-4">
+                        @Model.FName
+                    </h2>
+
+                    <p>
+                        <strong>用戶名：</strong>
+                        @Model.FUser?.FUsername
+                    </p>
+
+                    <p>
+                        <strong>審核日期：</strong>
+                        @Model.FApplyDate
+                    </p>
+
+                </div>
+
+
+                <!-- 右邊：狀態 -->
+                <div class="col-md-3">
+
+                    <label class="fw-bold mb-2">
+                        商家狀態
+                    </label>
+
+                    <form asp-action="ChangeStatus"
+                          method="post">
+
+                        <input type="hidden"
+                               name="id"
+                               value="@Model.FId" />
+
+                        <select name="status"
+                                class="form-select mb-3">
+
+                            @foreach (var status in ViewBag.Status)
+                            {
+                                <option value="@status.FId"
+                                        selected="@(status.FId == Model.FStatus)">
+                                    @status.FName
+                                </option>
+                            }
+
+                        </select>
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+                            更新狀態
+                        </button>
+
+                    </form>
+
+                </div>
+
             </div>
+
+
+            <hr class="my-4" />
+
+            <div>
+
+                <h4 class="mb-3">
+                    商家描述
+                </h4>
+
+                <div class="bg-light border rounded p-4"
+                     style="min-height:150px;">
+                    @Model.FDescription
+                </div>
+
+            </div>
+
         </div>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
+
+    </div>
+
 </div>

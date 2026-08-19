@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace prjMvcCoreMSIC173-04.Models;
+namespace prjMvcCore第四組.Models;
 
 public partial class TBrand
 {

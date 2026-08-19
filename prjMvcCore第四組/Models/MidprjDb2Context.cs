@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace prjMvcCoreMSIC173.Models;
+namespace prjMvcCore第四組.Models;
 
 public partial class MidprjDb2Context : DbContext
 {

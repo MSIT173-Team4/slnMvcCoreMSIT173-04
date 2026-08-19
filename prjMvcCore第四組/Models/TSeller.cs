@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace prjMvcCoreMSIC173-04.Models;
+namespace prjMvcCore第四組.Models;
 
 public partial class TSeller
 {

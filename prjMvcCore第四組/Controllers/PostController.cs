@@ -104,17 +104,28 @@ namespace prjMvcCore第四組.Controllers
 
             return RedirectToAction(nameof(Detail), new { id = postId });
         }
-
-        public IActionResult DeleteComment(int postId, int? id)
+        public IActionResult DeletePost(int? id)
         {
-            TMessageTable x = db.TMessageTables.FirstOrDefault(t => t.FMessageId == id);
-            if (x != null)
+            TPostTable postState = db.TPostTables.FirstOrDefault(t => t.FPostId == id);
+            if (postState != null)
             {
-                db.TMessageTables.Remove(x);
+                postState.FPostState = 0;
                 db.SaveChanges();
             }
 
-            return RedirectToAction(nameof(Detail), new { id = postId });
+            return RedirectToAction("List");
+        }
+
+        public IActionResult DeleteComment(int postId, int? id)
+        {
+            TMessageTable messageState = db.TMessageTables.FirstOrDefault(t => t.FMessageId == id);
+            if (messageState != null)
+            {
+                messageState.FMessageState = 0;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Detail", new { id = postId });
         }
     }
 }

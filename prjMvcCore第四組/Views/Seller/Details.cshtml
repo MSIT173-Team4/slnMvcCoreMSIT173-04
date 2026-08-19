@@ -1,0 +1,46 @@
+@model prjMvcCore第四組.Models.TSeller
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Seller Details</h1>
+<div class="container mt-4">
+    <div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-m4-4 ">
+                        <img src="~/image/Member/@Model.FUser.FProfileImg" /
+                        class="rounded-circle img-fluid"
+                        style="width:180px; height:180px;object-fit:cover"
+                        alt="Profile Image"
+                        >
+                    </div>
+                    <div class="col-m4-8">
+                   
+                        
+                               <h2>
+                                @Html.DisplayFor(Model=>Model.FName)
+                                </h2>
+                            <p>
+                                <strong>用戶名:</strong>
+                                @Html.DisplayFor(Model=>Model.FUser.FUsername)
+                            </p>
+                            <p>
+                                <strong>審核日期:</strong>
+                                @Html.DisplayFor(Model=>Model.FApplyDate)
+                            </p>
+                            <p>
+                            <strong>商家描述</strong>
+                            @Html.DisplayFor(Model=>Model.FDescription)
+                            </p>
+             
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

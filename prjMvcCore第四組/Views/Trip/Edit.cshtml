@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>修改行程</h1>
 
-<h4>CTripWrap</h4>
+<h4>修改行程規劃內容</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="FTripId" />
             
              <div class="form-group">
-                <label asp-for="Trip.FTripName" class="control-label"></label>
+                <label asp-for="Trip.FTripName" class="control-label">行程名稱</label>
                 <input asp-for="Trip.FTripName" class="form-control" />
                 <span asp-validation-for="Trip.FTripName" class="text-danger"></span>
             </div>
@@ -134,32 +134,32 @@
             });
         }
 
-        刪除單一選擇
+        //刪除單一選擇
         function removeRestaurant(index) {
             selectedRestaurants.splice(index, 1);
             renderSelectedList();
         }
 
-        清空選擇
+        //清空選擇
         document.getElementById('btnClearSelection').addEventListener('click', function() {
             selectedRestaurants = [];
             renderSelectedList();
         });
 
-        點擊「確認帶入」：將結果輸出至 FDescription 並建立隱藏的 Input 供後端接收
+        //點擊「確認帶入」：將結果輸出至 FDescription 並建立隱藏的 Input 供後端接收
         document.getElementById('btnConfirmSelection').addEventListener('click', function() {
             if (selectedRestaurants.length === 0) return;
 
-            1. 組合字串至 FDescription (例如: "1. 鼎泰豐 -> 2. 阜杭豆漿")
+            //1. 組合字串至 FDescription (例如: "1. 鼎泰豐 -> 2. 阜杭豆漿")
             const descriptionText = selectedRestaurants
                 .map((item, index) => `${index + 1}. ${item.name}`)
                 .join('\n');
 
             document.getElementById('txtDescription').value = descriptionText;
 
-            2. 建立隱藏的 input 標籤以發送 SelectedRestaurantIds 給 Controller
+            //2. 建立隱藏的 input 標籤以發送 SelectedRestaurantIds 給 Controller
             const hiddenContainer = document.getElementById('hiddenRestaurantInputs');
-            hiddenContainer.innerHTML = ''; 先清空
+            hiddenContainer.innerHTML = ''; //先清空
 
             selectedRestaurants.forEach((item, index) => {
                 const input = document.createElement('input');

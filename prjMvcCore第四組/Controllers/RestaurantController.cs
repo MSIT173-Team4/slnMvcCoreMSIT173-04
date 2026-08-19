@@ -17,9 +17,23 @@ namespace prjMvcCore第四組.Controllers{
         }
         public IActionResult List(CRestaurantViewModel vm)
         {
+            string keyword = vm.txtkeyword;
             MidprjDb2Context db = new MidprjDb2Context();
-            var datas = db.TRestaurants.Include(t => t.FCategory).ToList();
+            var datas = db.TRestaurants.Include(t => t.FCategory).AsQueryable();
+            
             List<CRestaurantWrap> list = new List<CRestaurantWrap>();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                datas = from t in datas select t;
+            }
+            else
+            {
+                datas = datas.Where
+                    (
+                        t => t.FName.Contains(keyword) ||
+                        t.FAddress.Contains(keyword)
+                    );
+            }
             foreach (var black in datas) 
             { 
                 CRestaurantWrap blue = new CRestaurantWrap() {Restaurant = black }; 
@@ -110,7 +124,7 @@ namespace prjMvcCore第四組.Controllers{
                 restaurant.FIsRecommend = cp.FIsRecommend;
 
 
-
+               
                 db.SaveChanges();
             }
                 

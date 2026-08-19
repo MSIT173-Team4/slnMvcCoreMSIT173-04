@@ -34,7 +34,7 @@ namespace prjMvcCore第四組.Models
             set { _trip.FTripId = value; }
         }
 
-        public int FUsersId
+        public int? FUsersId
         {
             get { return _trip.FUsersId; }
             set { _trip.FUsersId = value; }
@@ -46,7 +46,7 @@ namespace prjMvcCore第四組.Models
             set { _trip.FTripName = value; }
         }
         [DisplayName("行程日期")]
-        public DateOnly FTripDate
+        public DateTime FTripDate
         {
             get { return _trip.FTripDate; }
             set { _trip.FTripDate = value; }

@@ -1,0 +1,62 @@
+@model IEnumerable<prjMvcCore第四組.Models.TSeller>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Seller</h1>
+
+<p>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                使用者名
+            </th>
+            <th>
+                商家名
+            </th>
+            <th>
+                商家狀態
+            </th>
+            <th>
+                申請日期
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.FUser.FUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FName)
+            </td>
+            <td>
+                 @if (ViewBag.status.ContainsKey(item.FStatus))
+                    {
+                        @ViewBag.status[item.FStatus]
+                    }
+                    else
+                    {
+                        <span>未知狀態</span>
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FApplyDate)
+            </td>
+
+            <td>
+
+              <a asp-action="Details" asp-route-id="@item.FId">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

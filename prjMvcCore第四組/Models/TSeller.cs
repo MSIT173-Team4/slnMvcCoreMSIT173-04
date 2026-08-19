@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace prjMvcCoreMSIC173-04.Models;
 
 public partial class TSeller
 {
+    [Key]
     public int FId { get; set; }
 
     public int FUserId { get; set; }

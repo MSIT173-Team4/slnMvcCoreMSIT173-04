@@ -50,9 +50,21 @@
                         <span class="menu-header-text">會員管理</span>
                     </li>
                     <li class="menu-item">
-                        <a asp-controller="Members" asp-action="Index" class="menu-link">
+                        <a asp-controller="Member" asp-action="Index" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-user-account"></i>
                             <div>會員資料管理</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="Apply" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user-account"></i>
+                            <div>審核管理</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="Seller" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user-account"></i>
+                            <div>商家管理</div>
                         </a>
                     </li>
 
@@ -89,13 +101,13 @@
                         <span class="menu-header-text">美食地圖</span>
                     </li>
                     <li class="menu-item">
-                        <a asp-controller="FoodMap" asp-action="List" class="menu-link">
+                        <a asp-controller="Restaurant" asp-action="List" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-map-alt"></i>
                             <div>推薦商家管理</div>
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a asp-controller="FoodMap" asp-action="List" class="menu-link">
+                        <a asp-controller="Trip" asp-action="List" class="menu-link">
                             <i class="fa-solid fa-route menu-icon"></i>  <div>行程推薦管理</div>
                         </a>
                     </li>

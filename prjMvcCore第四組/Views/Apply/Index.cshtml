@@ -1,0 +1,68 @@
+﻿@model IEnumerable<prjMvcCore第四組.Models.TApply>
+
+
+@{
+    ViewData["Title"] = "Index";
+    var statuses = ViewBag.status;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">發送審核(測試)</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                商家名
+            </th>
+            <th>
+                用戶名
+            </th>
+            <th>
+                審核狀態
+            </th>
+            <th>
+                發出日期
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FStoreName
+                </td>
+
+                <td>
+                    @item.FUser?.FUsername
+                </td>
+
+                <td>
+                    @if (ViewBag.status.ContainsKey(item.FStatus))
+                    {
+                        @ViewBag.status[item.FStatus]
+                    }
+                    else
+                    {
+                        <span>未知狀態</span>
+                    }
+                </td>
+
+                <td>
+                    @item.FApplyDate
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.FId">
+                        Details
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

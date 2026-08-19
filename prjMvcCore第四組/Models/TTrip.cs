@@ -11,7 +11,7 @@ public partial class TTrip
 
     public string FTripName { get; set; } = null!;
 
-    public DateOnly FTripDate { get; set; }
+    public DateTime FTripDate { get; set; }
 
     public TimeOnly? FStartTime { get; set; }
 

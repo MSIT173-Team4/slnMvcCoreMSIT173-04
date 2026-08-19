@@ -1,0 +1,109 @@
+﻿@model prjMvcCore第四組.Models.CProductWrap
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>修改產品作業</h1>
+
+<h4>輸入產品資訊</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FProductId" />
+            <div class="form-group">
+                <label asp-for="FProductNo" class="control-label"></label>
+                <input asp-for="FProductNo" class="form-control" />
+                <span asp-validation-for="FProductNo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FSellerId" class="control-label"></label>
+                <input asp-for="FSellerId" class="form-control" />
+                <span asp-validation-for="FSellerId" class="text-danger"></span>
+            </div>
+  
+            <div class="form-group">
+                <label asp-for="FProductsCategoryId" class="control-label"></label>
+                <select asp-for="FProductsCategoryId" asp-items="Model.CategoryOptions" class="form-control"></select>
+                <span asp-validation-for="FProductsCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FProductname" class="control-label"></label>
+                <input asp-for="FProductname" class="form-control" />
+                <span asp-validation-for="FProductname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FDescription" class="control-label"></label>
+                <input asp-for="FDescription" class="form-control" />
+                <span asp-validation-for="FDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FStock" class="control-label"></label>
+                <input asp-for="FStock" class="form-control" />
+                <span asp-validation-for="FStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FPrice" class="control-label"></label>
+                <input asp-for="FPrice" class="form-control" />
+                <span asp-validation-for="FPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FBrandId" class="control-label"></label>
+                <input asp-for="FBrandId" class="form-control" />
+                <span asp-validation-for="FBrandId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FManufacturingDate" class="control-label"></label>
+                <input asp-for="FManufacturingDate" class="form-control" />
+                <span asp-validation-for="FManufacturingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FExpirationDate" class="control-label"></label>
+                <input asp-for="FExpirationDate" class="form-control" />
+                <span asp-validation-for="FExpirationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FProductDate" class="control-label"></label>
+                <input asp-for="FProductDate" class="form-control" />
+                <span asp-validation-for="FProductDate" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+                <label asp-for="FAttributesJson" class="control-label"></label>
+                <input asp-for="FAttributesJson" class="form-control" />
+                <span asp-validation-for="FAttributesJson" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="FProductStatus" class="control-label"></label>
+                <select asp-for="FProductStatus" asp-items="Model.FProductStatusOptions" class="form-control"></select>
+                <span asp-validation-for="FProductStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FReportCount" class="control-label"></label>
+                <input asp-for="FReportCount" class="form-control" />
+                <span asp-validation-for="FReportCount" class="text-danger"></span>
+            </div>
+
+            @* <div class="form-group">
+                <label class="control-label">選擇要上架的產品照片</label>
+                <input type="file" name="photo" class="form-control" />
+                <span asp-validation-for="FImagePath" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="送出並修改" class="btn btn-primary my-3 w-px-120" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ProductList" class="btn btn-secondary w-px-120">取消修改</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

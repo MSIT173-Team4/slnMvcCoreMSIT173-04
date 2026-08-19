@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using prjMvcCore第四組.Models;
 using prjMvcCore第四組.ViewModels;
 
@@ -51,7 +52,12 @@ namespace prjMvcCore第四組.Controllers
                 query = query.Where(t => t.FProductStatus == vm.StatusFilter.Value);
             }
 
-            return View(query.ToList());
+            List<CProductWrap> wrapList = query
+        .ToList()
+        .Select(t => new CProductWrap { product = t })
+        .ToList();
+
+            return View(wrapList);
         }
 
         [HttpPost]
@@ -78,5 +84,76 @@ namespace prjMvcCore第四組.Controllers
             db.SaveChanges();
             return RedirectToAction("ProductList");
         }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("ProductList");
+            MidprjDb2Context db = new MidprjDb2Context();
+            TProduct x = db.TProducts.FirstOrDefault(t => t.FProductId == id);
+            if (x == null)
+                return RedirectToAction("ProductList");
+            CProductWrap pw = new CProductWrap();
+            pw.product = x;
+            pw.CategoryOptions = db.TProductsCategories//抓取下拉選單的值
+                .Where(c => c.FParentCategoryId != null)
+                .OrderBy(c => c.FCategoryId)
+                .ToList()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.FCategoryId.ToString(),
+                    Text = c.FCategoryId + "_" + c.FCategoriesName   
+                })
+                .ToList();
+                    return View(pw);
+
+                }
+
+        [HttpPost]
+        public ActionResult Edit(CProductWrap pw)
+        {
+            MidprjDb2Context db = new MidprjDb2Context();
+            TProduct prodDb = db.TProducts.FirstOrDefault(t => t.FProductId == pw.FProductId);
+            //if (pw.photo != null)
+            //{
+            //    string photoName = Guid.NewGuid().ToString() + ".jpg";
+            //    pw.photo.CopyTo(new FileStream(_enviro.WebRootPath + "//images//" + photoName, FileMode.Create));
+            //    prodDb.FImagePath = photoName;
+            //}
+            prodDb.FProductNo = pw.FProductNo;
+            prodDb.FSellerId = pw.FSellerId;
+            prodDb.FProductsCategoryId = pw.FProductsCategoryId;
+            prodDb.FProductname = pw.FProductname;
+            prodDb.FDescription = pw.FDescription;
+            prodDb.FStock = pw.FStock;
+            prodDb.FPrice = pw.FPrice;
+            prodDb.FBrandId = pw.FBrandId;
+            prodDb.FManufacturingDate = pw.FManufacturingDate;
+            prodDb.FExpirationDate = pw.FExpirationDate;
+            prodDb.FProductDate = pw.FProductDate; 
+            //prodDb.FAttributesJson = pw.FAttributesJson;
+            prodDb.FProductStatus = pw.FProductStatus;
+            prodDb.FReportCount = pw.FReportCount;
+            db.SaveChanges();
+
+            return RedirectToAction("ProductList");
+
+
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            MidprjDb2Context db = new MidprjDb2Context();
+            TProduct x = db.TProducts.FirstOrDefault(t => t.FProductId == id);//FirstOrDefault當有找到符合條件的資料時，回傳第 1 筆
+            if (x != null)
+            {
+                db.TProducts.Remove(x);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("ProductList");
+        }
+
+       
     }
 }

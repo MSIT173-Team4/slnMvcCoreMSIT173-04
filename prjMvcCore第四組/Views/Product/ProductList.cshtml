@@ -1,4 +1,4 @@
-﻿@model IEnumerable<prjMvcCore第四組.Models.TProduct>
+﻿@model IEnumerable<prjMvcCore第四組.Models.CProductWrap>
 
 @{
     ViewData["Title"] = "商品清單";
@@ -41,8 +41,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary w-40 me-3">搜尋</button>
-                    <a asp-action="ProductList" class="btn btn-secondary  w-60">清除條件</a>
+                    <button type="submit" class="btn btn-primary w-px-120 me-3">搜尋</button>
+                    <a asp-action="ProductList" class="btn btn-secondary  w-px-120">清除條件</a>
                 </div>
                                 
             </div>
@@ -108,6 +108,7 @@
                             <button type="button" class="btn btn-sm btn-secondary" disabled>@item.FProductStatusText</button>
                         }
                         <a asp-action="Edit" asp-route-id="@item.FProductId" class="btn btn-sm btn-primary">編輯</a>
+                        <a asp-action="Delete" asp-route-id="@item.FProductId" class="btn btn-sm btn-danger" onclick="return confirm('確定要刪除嗎?')">刪除</a>
                     </td>
                 </tr>
             }

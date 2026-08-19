@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FBrandId" class="control-label"></label>
-                <input asp-for="FBrandId" class="form-control" />
+                <select asp-for="FBrandId" asp-items="Model.BrandOptions" class="form-control"></select>
                 <span asp-validation-for="FBrandId" class="text-danger"></span>
             </div>
             <div class="form-group">

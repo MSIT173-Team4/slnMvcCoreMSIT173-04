@@ -72,7 +72,8 @@ namespace prjMvcCore第四組.Models
             get { return _product.FBrandId; }
             set { _product.FBrandId = value; }
         }
-        
+        public List<SelectListItem>? BrandOptions { get; set; }
+
         [DisplayName("生產日期")]
         [DataType(DataType.Date)]
         public DateOnly FManufacturingDate {

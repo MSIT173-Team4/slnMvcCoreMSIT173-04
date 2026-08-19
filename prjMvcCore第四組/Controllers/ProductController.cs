@@ -105,7 +105,16 @@ namespace prjMvcCore第四組.Controllers
                     Text = c.FCategoryId + "_" + c.FCategoriesName   
                 })
                 .ToList();
-                    return View(pw);
+            pw.BrandOptions = db.TBrands//抓取下拉選單的值
+                .OrderBy(c => c.FBrandId)
+                .ToList()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.FBrandId.ToString(),
+                    Text = c.FBrandId + "_" + c.FBrandName
+                })
+                .ToList();
+            return View(pw);
 
                 }
 

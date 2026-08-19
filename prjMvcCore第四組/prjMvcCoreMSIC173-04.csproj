@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\image\Seller\**" />
+    <Content Remove="wwwroot\image\Seller\**" />
+    <EmbeddedResource Remove="wwwroot\image\Seller\**" />
+    <None Remove="wwwroot\image\Seller\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -23,9 +30,8 @@
   <ItemGroup>
     <Folder Include="Views\CRestaurantWrap\" />
     <Folder Include="Views\TRestaurant\" />
-    <Folder Include="wwwroot\image\Member\" />
     <Folder Include="wwwroot\image\Apply\" />
-    <Folder Include="wwwroot\image\Seller\" />
+    <Folder Include="wwwroot\image\Member\" />
   </ItemGroup>
 
 </Project>

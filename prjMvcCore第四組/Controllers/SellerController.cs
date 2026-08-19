@@ -17,8 +17,12 @@ namespace prjMvcCoreMSIC173.Controllers
     }
     public IActionResult Details(int id) 
         {
-
-            return View();
+            MidprjDb2Context db = new MidprjDb2Context();
+            var data=db.TSellers.Include(x => x.FUser).FirstOrDefault(x => x.FId == id);
+            var statuses = db.TStatuses.ToDictionary(x => x.FId, x => x.FName);
+      
+            ViewBag.status = statuses;
+            return View(data);
         }
 }
 }

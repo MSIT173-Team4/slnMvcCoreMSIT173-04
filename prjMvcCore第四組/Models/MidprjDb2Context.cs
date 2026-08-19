@@ -160,9 +160,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.ToTable("tBrand");
 
-            entity.Property(e => e.FBrandId)
-                .ValueGeneratedNever()
-                .HasColumnName("fBrandId");
+            entity.Property(e => e.FBrandId).HasColumnName("fBrandId");
             entity.Property(e => e.FBrandName)
                 .HasMaxLength(50)
                 .HasColumnName("fBrandName");
@@ -176,9 +174,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.HasIndex(e => e.FCode, "UQ_Coupon_Code").IsUnique();
 
-            entity.Property(e => e.FCouponId)
-                .ValueGeneratedNever()
-                .HasColumnName("fCouponId");
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponId");
             entity.Property(e => e.FCode)
                 .HasMaxLength(20)
                 .IsUnicode(false)
@@ -393,9 +389,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.ToTable("tOrderDiscount");
 
-            entity.Property(e => e.FOrderDiscountId)
-                .ValueGeneratedNever()
-                .HasColumnName("fOrderDiscountId");
+            entity.Property(e => e.FOrderDiscountId).HasColumnName("fOrderDiscountId");
             entity.Property(e => e.FAppliedAmount)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("fAppliedAmount");
@@ -530,9 +524,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.ToTable("tProductImage");
 
-            entity.Property(e => e.FProductImageId)
-                .ValueGeneratedNever()
-                .HasColumnName("fProductImageID");
+            entity.Property(e => e.FProductImageId).HasColumnName("fProductImageID");
             entity.Property(e => e.FCreatedDate).HasColumnName("fCreatedDate");
             entity.Property(e => e.FImageUrl)
                 .HasMaxLength(255)
@@ -1008,7 +1000,9 @@ public partial class MidprjDb2Context : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("Draft", "DF_Trip_Status")
                 .HasColumnName("fStatus");
-            entity.Property(e => e.FTripDate).HasColumnName("fTripDate");
+            entity.Property(e => e.FTripDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fTripDate");
             entity.Property(e => e.FTripName)
                 .HasMaxLength(100)
                 .HasColumnName("fTripName");
@@ -1019,7 +1013,6 @@ public partial class MidprjDb2Context : DbContext
 
             entity.HasOne(d => d.FUsers).WithMany(p => p.TTrips)
                 .HasForeignKey(d => d.FUsersId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Trip_Users_");
         });
 

@@ -83,8 +83,8 @@
                         @Html.DisplayFor(model => item.FUpdatedTime)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.FRestaurantId" class="btn btn-success">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@item.FRestaurantId" class="btn btn-danger" onclick="return confirm('確定要刪除嗎?')">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.FRestaurantId" class="btn btn-success">修改</a> |
+                        <a asp-action="Delete" asp-route-id="@item.FRestaurantId" class="btn btn-danger" onclick="return confirm('確定要刪除嗎?')">刪除</a>
                     </td>
                 </tr>
             }

@@ -14,46 +14,46 @@ namespace prjMvcCore第四組.Controllers
         {
             db = context;
         }
-        public async Task<IActionResult> List(CPostKeywordViewModel vm)
+        public IActionResult List(CPostKeywordViewModel vm)
         {
             if (string.IsNullOrEmpty(vm.PostKeyword))
             {
-                var posts = await db.TPostTables
+                var posts = db.TPostTables
                 .Include(p => p.FUser)
                 .Where(p => p.FPostState == 1)
                 .OrderByDescending(p => p.FPostDate)
-                .ToListAsync();
+                .ToList();
                 return View(posts);
             }
             else
             {
-                var posts = await db.TPostTables
+                var posts = db.TPostTables
                 .Include(p => p.FUser)
                 .Where( p => p.FPostState == 1 && p.FTitle.Contains(vm.PostKeyword))
                 .OrderByDescending(p => p.FPostDate)
-                .ToListAsync();
+                .ToList();
                 return View(posts);
             }
         }
 
-        public async Task<IActionResult> Detail(int id)
+        public IActionResult Detail(int? id)
         {
-            var post = await db.TPostTables
+            var post = db.TPostTables
                 .Include(p => p.FUser)
-                .FirstOrDefaultAsync(p => p.FPostId == id && p.FPostState == 1);
+                .FirstOrDefault(p => p.FPostId == id && p.FPostState == 1);
 
             if (post == null)
             {
                 return NotFound();
             }
             post.FViews += 1;
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
-            var messages = await db.TMessageTables
+            var messages = db.TMessageTables
                 .Include(m => m.FUser)
                 .Where(m => m.FPostId == id && m.FMessageState == 1)
                 .OrderBy(m => m.FMessageDate)
-                .ToListAsync();
+                .ToList();
 
             var messageUserMap = messages.ToDictionary(
                 m => m.FMessageId,
@@ -78,8 +78,8 @@ namespace prjMvcCore第四組.Controllers
         }
 
         [HttpPost]
-     
-        public async Task<IActionResult> AddComment(int postId, string messageContent)
+
+        public IActionResult AddComment(int postId, string messageContent)
         {
             if (string.IsNullOrWhiteSpace(messageContent))
             {
@@ -100,7 +100,19 @@ namespace prjMvcCore第四組.Controllers
             };
 
             db.TMessageTables.Add(newMessage);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
+
+            return RedirectToAction(nameof(Detail), new { id = postId });
+        }
+
+        public IActionResult DeleteComment(int postId, int? id)
+        {
+            TMessageTable x = db.TMessageTables.FirstOrDefault(t => t.FMessageId == id);
+            if (x != null)
+            {
+                db.TMessageTables.Remove(x);
+                db.SaveChanges();
+            }
 
             return RedirectToAction(nameof(Detail), new { id = postId });
         }

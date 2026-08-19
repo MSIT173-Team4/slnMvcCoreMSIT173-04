@@ -67,9 +67,10 @@
                             <span>
                                 <i class="bi bi-hand-thumbs-up me-1"></i>@item.Message.FLikes
                             </span>
-                            <button type="button" class="btn btn-link p-0 text-decoration-none text-secondary fs-7" disabled>
+                            <button type="button" class="btn btn-link p-0 text-decoration-none text-secondary fs-7">
                                 回覆
                             </button>
+                            <a asp-action="DeleteComment" asp-route-id="@item.Message.FMessageId" class="btn btn-outline-danger btn-sm" onclick="return confirm('確定要刪除嗎?')">刪除</a>
                             <small class="text-muted ms-auto">@item.Message.FMessageDate.ToString("yyyy/MM/dd HH:mm")</small>
                         </div>
                     </div>

@@ -10,5 +10,7 @@
         public string FPhone { get; set; } = null!;
         public bool FGender { get; set; } = false;
         public string FAddress { get; set; } = null!;
-}
+        public string FProfilePicture { get; set; } = null!;
+        public IFormFile img {  get; set; }
+    }
 }

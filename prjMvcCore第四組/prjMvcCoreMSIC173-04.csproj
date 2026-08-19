@@ -23,6 +23,9 @@
   <ItemGroup>
     <Folder Include="Views\CRestaurantWrap\" />
     <Folder Include="Views\TRestaurant\" />
+    <Folder Include="wwwroot\image\Member\" />
+    <Folder Include="wwwroot\image\Apply\" />
+    <Folder Include="wwwroot\image\Seller\" />
   </ItemGroup>
 
 </Project>

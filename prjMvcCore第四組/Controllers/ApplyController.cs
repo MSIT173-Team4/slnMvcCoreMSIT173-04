@@ -7,6 +7,11 @@ namespace prjMvcCoreMSIC173.Controllers
 {
     public class ApplyController : Controller
 {
+        private IWebHostEnvironment _env;
+        public ApplyController(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
     public IActionResult Index()
     {
 
@@ -28,6 +33,16 @@ namespace prjMvcCoreMSIC173.Controllers
         {
             MidprjDb2Context db = new MidprjDb2Context();
             if (a == null) return RedirectToAction("Create");
+            if(a.img != null && a.img.Length > 0)
+            {
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(a.img.FileName);
+                string filePath = Path.Combine(_env.WebRootPath, "image","Apply", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    a.img.CopyTo(stream);
+                }
+                a.FIdCard = "/image/Apply/" + fileName;
+            }
             TApply apply = new TApply();
             apply.FUserId = a.FUserId;
             apply.FStoreName = a.FStoreName;

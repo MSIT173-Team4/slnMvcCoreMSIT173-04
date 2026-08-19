@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\image\Seller\**" />
+    <Content Remove="wwwroot\image\Seller\**" />
+    <EmbeddedResource Remove="wwwroot\image\Seller\**" />
+    <None Remove="wwwroot\image\Seller\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Views\CRestaurantWrap\**" />
     <Compile Remove="Views\TRestaurant\**" />
     <Content Remove="Views\CRestaurantWrap\**" />
@@ -34,6 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\CRestaurantWrap\" />
+    <Folder Include="Views\TRestaurant\" />
+    <Folder Include="wwwroot\image\Apply\" />
+    <Folder Include="wwwroot\image\Member\" />
     <Folder Include="Views\CTripWrap\" />
   </ItemGroup>
 

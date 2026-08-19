@@ -1,0 +1,173 @@
+@model prjMvcCore第四組.Models.CTripWrap
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CTripWrap</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FTripId" />
+            
+             <div class="form-group">
+                <label asp-for="Trip.FTripName" class="control-label"></label>
+                <input asp-for="Trip.FTripName" class="form-control" />
+                <span asp-validation-for="Trip.FTripName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FTripDate" class="control-label"></label>
+                <input asp-for="FTripDate" type="date"  class="form-control" />
+                <span asp-validation-for="Trip.FTripDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FStartTime" class="control-label"></label>
+                <input asp-for="FStartTime" type="time" class="form-control" />
+                <span asp-validation-for="Trip.FStartTime" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="FDescription" class="control-label">行程描述 (點擊加入餐廳)</label>
+                <textarea asp-for="Trip.FDescription" id="txtDescription" class="form-control" rows="4" placeholder="點擊此處選擇餐廳排定行程..." data-bs-toggle="modal" data-bs-target="#restaurantModal" readonly></textarea>
+                <span asp-validation-for="Trip.FDescription" class="text-danger"></span>
+            </div>
+
+            <!-- 用於儲存選取餐廳 ID 的隱藏容器 -->
+            <div id="hiddenRestaurantInputs"></div>
+
+            <div class="form-group">
+                <label asp-for="FStatus" class="control-label"></label>
+                <select asp-for="FStatus"
+                        asp-items="Model.StatusSelectList"
+                        class="form-select">
+                </select>
+                <span asp-validation-for="Trip.FStatus" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="儲存並送出" class="btn btn-primary" />
+            </div>
+        </form>
+
+         <div class="modal fade" id="restaurantModal" tabindex="-1" aria-labelledby="restaurantModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="restaurantModalLabel">選擇與排定餐廳順序</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- 左側：可選餐廳清單 -->
+                            <div class="col-md-6">
+                                <h6>可選餐廳 (按點擊順序加入)</h6>
+                                <div class="list-group" style="max-height: 300px; overflow-y: auto;">
+                                    @foreach (var item in Model.Restaurants)
+                                    {
+                                        <button type="button" class="list-group-item list-group-item-action btn-add-restaurant"
+                                                data-id="@item.Value" data-name="@item.Text">
+                                            + @item.Text
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                            <!-- 右側：已選擇與排定的清單 -->
+                            <div class="col-md-6">
+                                <h6>已排定行程順序</h6>
+                                <ol id="selectedList" class="list-group list-group-numbered">
+                                    <!-- JS 動態渲染 -->
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" id="btnClearSelection">清空</button>
+                        <button type="button" class="btn btn-primary" id="btnConfirmSelection" data-bs-dismiss="modal">確認帶入描述</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="List">取消修改</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <script>
+        // 記錄選擇的餐廳 { id, name }
+        let selectedRestaurants = [];
+
+        // 點擊左側餐廳時加入排定順序
+        document.querySelectorAll('.btn-add-restaurant').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const name = this.getAttribute('data-name');
+
+                // 加入陣列 (允許重複選取或直接追加)
+                selectedRestaurants.push({ id: id, name: name });
+                renderSelectedList();
+            });
+        });
+
+        // 渲染右側已選擇清單
+        function renderSelectedList() {
+            const listContainer = document.getElementById('selectedList');
+            listContainer.innerHTML = '';
+
+            selectedRestaurants.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.innerHTML = `
+                            <span>${item.name}</span>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeRestaurant(${index})">刪除</button>
+                        `;
+                listContainer.appendChild(li);
+            });
+        }
+
+        刪除單一選擇
+        function removeRestaurant(index) {
+            selectedRestaurants.splice(index, 1);
+            renderSelectedList();
+        }
+
+        清空選擇
+        document.getElementById('btnClearSelection').addEventListener('click', function() {
+            selectedRestaurants = [];
+            renderSelectedList();
+        });
+
+        點擊「確認帶入」：將結果輸出至 FDescription 並建立隱藏的 Input 供後端接收
+        document.getElementById('btnConfirmSelection').addEventListener('click', function() {
+            if (selectedRestaurants.length === 0) return;
+
+            1. 組合字串至 FDescription (例如: "1. 鼎泰豐 -> 2. 阜杭豆漿")
+            const descriptionText = selectedRestaurants
+                .map((item, index) => `${index + 1}. ${item.name}`)
+                .join('\n');
+
+            document.getElementById('txtDescription').value = descriptionText;
+
+            2. 建立隱藏的 input 標籤以發送 SelectedRestaurantIds 給 Controller
+            const hiddenContainer = document.getElementById('hiddenRestaurantInputs');
+            hiddenContainer.innerHTML = ''; 先清空
+
+            selectedRestaurants.forEach((item, index) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `SelectedRestaurantIds[${index}]`;
+                input.value = item.id;
+                hiddenContainer.appendChild(input);
+            });
+        });
+    </script>
+}

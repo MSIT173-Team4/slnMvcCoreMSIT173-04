@@ -1,0 +1,83 @@
+@model IEnumerable<prjMvcCore第四組.Models.CTripWrap>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>行程一覽表</h1>
+<form method="post">
+    @Html.TextBox("txtkeyword", "", new { @class = "form-control" })<input type="submit" value="查詢" />
+</form>
+<p>
+    <a asp-action="Create" class="btn btn-primary">新增推薦行程</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                序號
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FTripName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FTripDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FUpdatedTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model) {
+                count++;
+        <tr>
+                    <td>
+                        @count
+                    </td>
+            <td>
+                @Html.DisplayFor(model => item.FTripName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FTripDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FCreatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FUpdatedTime)
+            </td>
+            
+            <td>
+                        <a asp-action="Edit" asp-route-id="@item.FTripId" class="btn btn-success">修改</a> |
+                        <a asp-action="Delete" asp-route-id="@item.FTripId" class="btn btn-danger" onclick="return confirm('確定要刪除嗎?')">刪除</a>
+            </td>
+        </tr>
+}
+}
+    </tbody>
+</table>

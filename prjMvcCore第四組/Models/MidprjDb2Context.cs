@@ -277,7 +277,6 @@ public partial class MidprjDb2Context : DbContext
             entity.Property(e => e.FPostId).HasColumnName("fPostID");
             entity.Property(e => e.FReplyMessageId).HasColumnName("fReplyMessageID");
             entity.Property(e => e.FUserId).HasColumnName("fUser_Id");
-            entity.Property(e => e.FViews).HasColumnName("fViews");
 
             entity.HasOne(d => d.FPost).WithMany(p => p.TMessageTables)
                 .HasForeignKey(d => d.FPostId)

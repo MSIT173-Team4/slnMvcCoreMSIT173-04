@@ -1,22 +1,25 @@
 @model IEnumerable<prjMvcCore第四組.Models.CRecipeWrap>
 
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "RecipeList";
 }
 
-<h1>食譜後台</h1>
+<h1>食譜資料一覽表</h1>
+
+<form method="post">
+    關鍵字： <input type="text" name="txtKeyword" />
+    <input type="submit" value="查詢" />
+</form>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">新增食譜</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.recipe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FAuthorUserId)
+                序
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FTitle)
@@ -28,25 +31,7 @@
                 @Html.DisplayNameFor(model => model.FDefaultServings)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FCoverImageUrl)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FTotalCookingMinutes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FViewCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FIsAiGenerated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FCreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FUpdatedAt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Photo)
@@ -55,53 +40,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.recipe)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FAuthorUserId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FDefaultServings)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FCoverImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FTotalCookingMinutes)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FViewCount)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FIsAiGenerated)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FCreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FUpdatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Photo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FRecipeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FRecipeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FRecipeId">Delete</a>
-            </td>
-        </tr>
-}
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FDefaultServings)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FTotalCookingMinutes)
+                    </td>
+                    <td>
+                        <img src="~/images/@item.FCoverImageUrl" width="60" height="40" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new { id = item.FRecipeId }) |
+                        @Html.ActionLink("刪除", "Delete", new { id = item.FRecipeId }, new { onclick = "return confirm('確定要刪除嗎?')" })
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

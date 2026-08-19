@@ -1,0 +1,215 @@
+@model prjMvcCore第四組.ViewModels.CRecipeCreateViewModel
+
+@{
+    ViewData["Title"] = "撰寫食譜";
+}
+
+<style>
+    .upload-card {
+        border: 2px dashed #cbd5e1;
+        border-radius: 8px;
+        background-color: #f8fafc;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .upload-card:hover {
+            background-color: #f1f5f9;
+            border-color: #94a3b8;
+        }
+</style>
+
+<div class="container py-4">
+    <form asp-action="Create" enctype="multipart/form-data" method="post" id="recipeForm">
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="mb-4">
+                    <label asp-for="FTitle" class="form-label fw-bold"></label>
+                    <input asp-for="FTitle" class="form-control form-control-lg" placeholder="例如：麻藥溏心蛋" maxlength="20" />
+                    <span asp-validation-for="FTitle" class="text-danger"></span>
+                </div>
+
+                <div class="upload-card text-center py-5 mb-4" onclick="document.getElementById('coverInput').click();">
+                    <img id="coverPreview" src="#" class="img-fluid rounded d-none mb-2" style="max-height: 300px;" />
+                    <div id="coverBox">
+                        <i class="bi bi-camera fs-1 text-secondary"></i>
+                        <h6 class="fw-bold mt-2">點擊上傳封面照片</h6>
+                        <small class="text-muted">建議尺寸 1200x900 以上</small>
+                    </div>
+                    <input asp-for="CoverPhoto" type="file" id="coverInput" class="d-none" accept="image/*" onchange="previewImg(this, 'coverPreview', 'coverBox');" />
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="FDescription" class="form-label fw-bold"></label>
+                    <textarea asp-for="FDescription" class="form-control" rows="3" placeholder="輸入食譜簡介（最多 200 字）..." maxlength="200"></textarea>
+                    <span asp-validation-for="FDescription" class="text-danger"></span>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="FDefaultServings" class="form-label fw-bold"></label>
+                        <select asp-for="FDefaultServings" class="form-select">
+                            <option value="1">1 人份</option>
+                            <option value="2" selected>2 人份</option>
+                            <option value="4">4 人份</option>
+                            <option value="6">6 人份以上</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FTotalCookingMinutes" class="form-label fw-bold"></label>
+                        <select asp-for="FTotalCookingMinutes" class="form-select">
+                            <option value="15">15 分鐘</option>
+                            <option value="30" selected>30 分鐘</option>
+                            <option value="45">45 分鐘</option>
+                            <option value="60">60 分鐘以上</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-basket text-success"></i> 食材設定</h5>
+                    </div>
+                    <div class="card-body" id="ingredientList">
+                        <div class="row g-2 mb-2 ingredient-row align-items-center">
+                            <div class="col-6"><input type="text" name="Ingredients[0].IngredientName" class="form-control" placeholder="食材名稱 (例: 雞蛋)" /></div>
+                            <div class="col-3"><input type="number" step="0.1" name="Ingredients[0].RequiredQuantity" class="form-control" placeholder="份量 (例: 2)" /></div>
+                            <div class="col-2"><input type="text" name="Ingredients[0].Unit" class="form-control" placeholder="單位 (例: 顆)" /></div>
+                            <div class="col-1 text-center"><button type="button" class="btn btn-outline-danger btn-sm" onclick="delRow(this, '.ingredient-row');"><i class="bi bi-trash"></i></button></div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-3">
+                        <button type="button" class="btn btn-outline-primary w-100" onclick="addIngredient();">+ 加入食材</button>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-list-ol text-primary"></i> 料理步驟</h5>
+                    </div>
+                    <div class="card-body" id="stepList">
+                        <div class="row g-3 mb-3 p-3 border rounded step-row bg-white align-items-start shadow-sm">
+                            <div class="col-auto pt-2">
+                                <span class="fs-4 fw-bold step-seq">1</span>
+                                <input type="hidden" name="Steps[0].StepNumber" value="1" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="file" name="Steps[0].StepPhotos" class="form-control" accept="image/*" />
+                            </div>
+                            <div class="col-md-7">
+                                <textarea name="Steps[0].Instruction" class="form-control" rows="2" placeholder="輸入步驟說明..." maxlength="150"></textarea>
+                            </div>
+                            <div class="col-md-1 text-center pt-2">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="delRow(this, '.step-row');"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-3">
+                        <button type="button" class="btn btn-outline-primary w-100" onclick="addStep();">+ 加入步驟</button>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4 bg-light">
+                    <div class="card-body">
+                        <label asp-for="FTips" class="form-label fw-bold"></label>
+                        <textarea asp-for="FTips" class="form-control" rows="3" placeholder="輸入料理小撇步（選填）..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="sticky-top d-grid gap-2" style="top: 20px;">
+                    <button type="submit" class="btn btn-danger btn-lg shadow-sm">發布食譜</button>
+                    <a asp-action="List" class="btn btn-outline-secondary">取消並返回</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<template id="tpl-ingredient">
+    <div class="row g-2 mb-2 ingredient-row align-items-center">
+        <div class="col-6"><input type="text" class="form-control input-name" placeholder="食材名稱" /></div>
+        <div class="col-3"><input type="number" step="0.1" class="form-control input-qty" placeholder="份量" /></div>
+        <div class="col-2"><input type="text" class="form-control input-unit" placeholder="單位" /></div>
+        <div class="col-1 text-center"><button type="button" class="btn btn-outline-danger btn-sm" onclick="delRow(this, '.ingredient-row');"><i class="bi bi-trash"></i></button></div>
+    </div>
+</template>
+
+<template id="tpl-step">
+    <div class="row g-3 mb-3 p-3 border rounded step-row bg-white align-items-start shadow-sm">
+        <div class="col-auto pt-2">
+            <span class="fs-4 fw-bold step-seq"></span>
+            <input type="hidden" class="input-step-num" />
+        </div>
+        <div class="col-md-3">
+            <input type="file" class="form-control input-photo" accept="image/*" />
+        </div>
+        <div class="col-md-7">
+            <textarea class="form-control input-desc" rows="2" placeholder="輸入步驟說明..." maxlength="150"></textarea>
+        </div>
+        <div class="col-md-1 text-center pt-2">
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="delRow(this, '.step-row');"><i class="bi bi-trash"></i></button>
+        </div>
+    </div>
+</template>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function previewImg(input, imgId, boxId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById(imgId).src = e.target.result;
+                    document.getElementById(imgId).classList.remove('d-none');
+                    document.getElementById(boxId).classList.add('d-none');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function addIngredient() {
+            const tpl = document.getElementById('tpl-ingredient').content.cloneNode(true);
+            document.getElementById('ingredientList').appendChild(tpl);
+            reindex();
+        }
+
+        function addStep() {
+            const tpl = document.getElementById('tpl-step').content.cloneNode(true);
+            document.getElementById('stepList').appendChild(tpl);
+            reindex();
+        }
+
+        function delRow(btn, rowSelector) {
+            const rows = document.querySelectorAll(rowSelector);
+            if (rows.length > 1) {
+                btn.closest(rowSelector).remove();
+                reindex();
+            }
+        }
+
+        function reindex() {
+            document.querySelectorAll('.ingredient-row').forEach((row, i) => {
+                row.querySelector('.input-name')?.setAttribute('name', `Ingredients[${i}].IngredientName`);
+                row.querySelector('.input-qty')?.setAttribute('name', `Ingredients[${i}].RequiredQuantity`);
+                row.querySelector('.input-unit')?.setAttribute('name', `Ingredients[${i}].Unit`);
+            });
+            document.querySelectorAll('.step-row').forEach((row, i) => {
+                const seq = i + 1;
+                row.querySelector('.step-seq').innerText = seq;
+                const stepNum = row.querySelector('.input-step-num');
+                if (stepNum) {
+                    stepNum.setAttribute('name', `Steps[${i}].StepNumber`);
+                    stepNum.value = seq;
+                }
+                row.querySelector('.input-photo')?.setAttribute('name', `Steps[${i}].StepPhotos`);
+                row.querySelector('.input-desc')?.setAttribute('name', `Steps[${i}].Instruction`);
+            });
+        }
+    </script>
+}

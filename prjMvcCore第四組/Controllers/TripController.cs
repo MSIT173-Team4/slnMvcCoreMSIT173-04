@@ -18,15 +18,30 @@ namespace prjMvcCore第四組.Controllers
 
         public IActionResult List(CRestaurantViewModel vm)
         {
+            string keyword = vm.txtkeyword;
             MidprjDb2Context db = new MidprjDb2Context();
-            var datas = db.TTrips.Include(t => t.FUsers).ToList();
+            var datas = db.TTrips.Include(t => t.FUsers).AsQueryable();
             DateTime now = DateTime.Now;
             bool isUpdated = false;
+            if (string.IsNullOrEmpty(keyword)) 
+            {
+                datas = from t in datas select t;
+            }
+            else
+            {
+                datas = datas.Where
+                    (
+                        t => t.FTripName.Contains(keyword) ||
+                        t.FDescription.Contains(keyword) ||
+                        t.FStatus.Contains(keyword)
+                    );
+            }
+
             List<CTripWrap> list = new List<CTripWrap>();
             foreach (var black in datas)
             {
                 CTripWrap blue = new CTripWrap() { Trip = black };
-                if (blue.StatusEnum != CTripWrap.TripStatus.已結束 && blue.FCreatedTime.AddMinutes(2) <= now)
+                if (blue.StatusEnum != CTripWrap.TripStatus.已結束 && blue.FTripDate.AddDays(1) <= now)
                 {
                     blue.StatusEnum = CTripWrap.TripStatus.已結束;
                     blue.Trip.FUpdatedTime = now;

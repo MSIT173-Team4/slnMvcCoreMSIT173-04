@@ -13,7 +13,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Trip.FTripName" class="control-label"></label>
+                <label asp-for="Trip.FTripName" class="control-label">行程名稱</label>
                 <input asp-for="Trip.FTripName" class="form-control" />
                 <span asp-validation-for="Trip.FTripName" class="text-danger"></span>
             </div>

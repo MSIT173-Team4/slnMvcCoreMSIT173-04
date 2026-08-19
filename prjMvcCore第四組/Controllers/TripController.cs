@@ -156,7 +156,7 @@ namespace prjMvcCore第四組.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(CTripWrap cTrip , string submitButton)
+        public IActionResult Edit(CTripWrap cTrip)
         {
             MidprjDb2Context db = new MidprjDb2Context();
 
@@ -170,6 +170,8 @@ namespace prjMvcCore第四組.Controllers
                 trip.FDescription = cTrip.FDescription;
                 trip.FStartTime = cTrip.FStartTime;
                 trip.FStatus = cTrip.FStatus;
+                trip.FUpdatedTime = DateTime.Now;
+                db.SaveChanges();
             }
 
 

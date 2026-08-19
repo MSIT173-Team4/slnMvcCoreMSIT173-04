@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<prjMvcCore第四組.Models.TApply>
 
+
 @{
     ViewData["Title"] = "Index";
+    var statuses = ViewBag.status;
 }
 
 <h1>Index</h1>
@@ -29,24 +31,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FStoreName)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.FUser.FUsername)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FApplyDate)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.FId">Details</a> 
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FStoreName
+                </td>
+
+                <td>
+                    @item.FUser?.FUsername
+                </td>
+
+                <td>
+                    @if (ViewBag.status.ContainsKey(item.FStatus))
+                    {
+                        @ViewBag.status[item.FStatus]
+                    }
+                    else
+                    {
+                        <span>未知狀態</span>
+                    }
+                </td>
+
+                <td>
+                    @item.FApplyDate
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.FId">
+                        Details
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

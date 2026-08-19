@@ -10,6 +10,11 @@ namespace prjMvcCore第四組.Controllers
 {
     public class MemberController : Controller
 {
+        private IWebHostEnvironment _env;
+        public MemberController(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
     public IActionResult Index(string? txtKeyword)
     {
             
@@ -33,7 +38,19 @@ namespace prjMvcCore第四組.Controllers
         public IActionResult Create(RegisterViewModel u)
         {
             MidprjDb2Context db = new MidprjDb2Context();
+            if (u == null) return RedirectToAction("Create");
+            
             TUser user = new TUser();
+            if (u.img!=null)
+            {
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(u.img.FileName);
+                string filePath = Path.Combine(_env.WebRootPath, "image","User", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    u.img.CopyTo(stream);
+                }
+                u.FProfilePicture = "/image/User/" + fileName;
+            }
             user.FUsername = u.FUsername;
             user.FPassword = HashPassword(u.FPassword);
             user.FEmail = u.FEmail;
@@ -41,6 +58,7 @@ namespace prjMvcCore第四組.Controllers
             user.FAddress = u.FAddress;
             user.FIdNum = u.FIdNum;
             user.FPhone = u.FPhone;
+            user.FProfileImg = u.FProfilePicture;
             user.FGender = u.FGender;
             user.FCreateDate = DateTime.Now;
             

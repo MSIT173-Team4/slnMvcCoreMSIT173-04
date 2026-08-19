@@ -14,16 +14,28 @@ namespace prjMvcCore第四組.Controllers
         {
             db = context;
         }
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(CPostKeywordViewModel vm)
         {
-            var posts = await db.TPostTables
+            if (string.IsNullOrEmpty(vm.PostKeyword))
+            {
+                var posts = await db.TPostTables
                 .Include(p => p.FUser)
                 .Where(p => p.FPostState == 1)
                 .OrderByDescending(p => p.FPostDate)
                 .ToListAsync();
-
-            return View(posts);
+                return View(posts);
+            }
+            else
+            {
+                var posts = await db.TPostTables
+                .Include(p => p.FUser)
+                .Where( p => p.FPostState == 1 && p.FTitle.Contains(vm.PostKeyword))
+                .OrderByDescending(p => p.FPostDate)
+                .ToListAsync();
+                return View(posts);
+            }
         }
+
         public async Task<IActionResult> Detail(int id)
         {
             var post = await db.TPostTables

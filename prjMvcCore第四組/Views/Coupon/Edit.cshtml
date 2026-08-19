@@ -1,0 +1,130 @@
+﻿@model prjMvcCore第四組.Models.CCouponWarp
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<style>
+    input.no-spinner::-webkit-outer-spin-button,
+    input.no-spinner::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input.no-spinner[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<h1>編輯優惠券</h1>
+
+<h4>輸入優惠券明細</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FCouponId" />
+
+            <div class="form-group">
+                <label asp-for="FSellerId" class="control-label"></label>
+                <input asp-for="FSellerId" class="form-control no-spinner" />
+                <span asp-validation-for="FSellerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FName" class="control-label"></label>
+                <input asp-for="FName" class="form-control" />
+                <span asp-validation-for="FName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FCode" class="control-label"></label>
+                <input asp-for="FCode" class="form-control" />
+                <span asp-validation-for="FCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FScopeType" class="control-label"></label>
+                <select asp-for="FScopeType" asp-items="Model.ScopeTypeOptions" class="form-control">
+                    <option value="">請選擇適用範圍</option>
+                </select>
+                <span asp-validation-for="FScopeType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FDiscountType" class="control-label"></label>
+                <select asp-for="FDiscountType" asp-items="Model.DiscountTypeOptions" id="FDiscountType" class="form-control">
+                    <option value="">請選擇折抵類型</option>
+                </select>
+                <span asp-validation-for="FDiscountType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FDiscountValue" class="control-label"></label>
+                <input asp-for="FDiscountValue" id="FDiscountValue" class="form-control no-spinner" step="0.01" />
+                <small id="FDiscountValueHint" class="form-text text-muted"></small>
+                <span asp-validation-for="FDiscountValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FMinPurchaseAmount" class="control-label"></label>
+                <input asp-for="FMinPurchaseAmount" class="form-control" />
+                <span asp-validation-for="FMinPurchaseAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FMaxDiscountAmount" class="control-label"></label>
+                <input asp-for="FMaxDiscountAmount" class="form-control" />
+                <span asp-validation-for="FMaxDiscountAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FStartDate" class="control-label"></label>
+                <input asp-for="FStartDate" class="form-control" />
+                <span asp-validation-for="FStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FEndDate" class="control-label"></label>
+                <input asp-for="FEndDate" class="form-control" />
+                <span asp-validation-for="FEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FIsActive" class="control-label"></label>
+                <select asp-for="FIsActive" class="form-control">
+                    <option value="true" selected="@(Model.FIsActive == true)">啟用</option>
+                    <option value="false" selected="@(Model.FIsActive != true)">停用</option>
+                </select>
+                <span asp-validation-for="FIsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="送出並修改" class="btn btn-primary my-3 w-px-120" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List" class="btn btn-secondary w-px-120">取消修改</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(function() {
+            function updateDiscountValueRule() {
+                var type = $('#FDiscountType').val();
+                var $input = $('#FDiscountValue');
+                var $hint = $('#FDiscountValueHint');
+
+                if (type === 'Percentage') {
+                    $input.attr({ min: '0.01', max: '1', step: '0.01' });
+                    $hint.text('比例折扣請輸入 0.01～1 之間的小數，例如打 85 折請輸入 0.85');
+                } else if (type === 'Fixed') {
+                    $input.attr({ min: '0.01', step: '0.01' }).removeAttr('max');
+                    $hint.text('固定金額請輸入大於 0 的折扣金額，例如折 100 元請輸入 100');
+                } else {
+                    $input.removeAttr('min').removeAttr('max');
+                    $hint.text('請先選擇折抵類型');
+                }
+            }
+
+            $('#FDiscountType').on('change', updateDiscountValueRule);
+            updateDiscountValueRule();
+        });
+    </script>
+}

@@ -143,6 +143,25 @@ namespace prjMvcCore第四組.Models
             set { _product.FReportCount = value; }
         }
 
-        
+        private static readonly Dictionary<string, string> _scopeTypeMap = new()
+{
+    { "Shipping", "運費券" },
+    { "Platform", "全站券" },
+    { "Store", "賣場券" },
+};
+
+        private static readonly Dictionary<string, string> _discountTypeMap = new()
+{
+    { "Fixed", "固定金額" },
+    { "Percentage", "比例折扣" },
+};
+
+        public List<SelectListItem> ScopeTypeOptions =>
+            _scopeTypeMap.Select(kv => new SelectListItem { Value = kv.Key, Text = kv.Value }).ToList();
+
+        public List<SelectListItem> DiscountTypeOptions =>
+            _discountTypeMap.Select(kv => new SelectListItem { Value = kv.Key, Text = kv.Value }).ToList();
+
+
     }
 }

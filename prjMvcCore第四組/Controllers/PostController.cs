@@ -8,8 +8,13 @@ namespace prjMvcCore第四組.Controllers
     public class PostController : Controller
     {
 
-        DbPostContext db = new DbPostContext();
-        /*public async Task<IActionResult> List()
+        MidprjDb2Context db = new MidprjDb2Context();
+
+        public PostController(MidprjDb2Context context)
+        {
+            db = context;
+        }
+        public async Task<IActionResult> List()
         {
             var posts = await db.TPostTables
                 .Include(p => p.FUser)
@@ -18,7 +23,7 @@ namespace prjMvcCore第四組.Controllers
                 .ToListAsync();
 
             return View(posts);
-        }*/
+        }
         public async Task<IActionResult> Detail(int id)
         {
             var post = await db.TPostTables

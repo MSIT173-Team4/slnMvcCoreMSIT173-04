@@ -7,7 +7,7 @@ using prjMvcCore第四組.ViewModels;
 using prjMvcCore第四組.Models;
 
 namespace prjMvcCore第四組.Controllers{
-    public class FoodMapController : Controller{
+    public class RestaurantController : Controller{
 
         
         public IActionResult Index()
@@ -15,11 +15,25 @@ namespace prjMvcCore第四組.Controllers{
                 
             return View(); 
         }
-        public IActionResult List(CFoodMapViewModel vm)
+        public IActionResult List(CRestaurantViewModel vm)
         {
+            string keyword = vm.txtkeyword;
             MidprjDb2Context db = new MidprjDb2Context();
-            var datas = db.TRestaurants.Include(t => t.FCategory).ToList();
+            var datas = db.TRestaurants.Include(t => t.FCategory).AsQueryable();
+            
             List<CRestaurantWrap> list = new List<CRestaurantWrap>();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                datas = from t in datas select t;
+            }
+            else
+            {
+                datas = datas.Where
+                    (
+                        t => t.FName.Contains(keyword) ||
+                        t.FAddress.Contains(keyword)
+                    );
+            }
             foreach (var black in datas) 
             { 
                 CRestaurantWrap blue = new CRestaurantWrap() {Restaurant = black }; 
@@ -44,6 +58,7 @@ namespace prjMvcCore第四組.Controllers{
         [HttpPost]
         public IActionResult Create(CRestaurantWrap cp)
         {
+            
             if (cp.FName == null)
             {
                 return View();
@@ -51,7 +66,9 @@ namespace prjMvcCore第四組.Controllers{
             MidprjDb2Context db = new MidprjDb2Context();
             if (string.IsNullOrEmpty(cp.Restaurant.FGooglePlaceId))
             {
-                cp.Restaurant.FGooglePlaceId = /* 取得或產生的有效值，例如從表單或Google API */ "";
+                cp.Restaurant.FGooglePlaceId = Guid.NewGuid().ToString("N");
+                /* 取得或產生的有效值，例如從表單或Google API */
+                ;
             }
             db.TRestaurants.Add(cp.Restaurant);
             db.SaveChanges();

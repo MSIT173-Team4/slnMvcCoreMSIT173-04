@@ -1,0 +1,52 @@
+﻿@model IEnumerable<prjMvcCore第四組.Models.TUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@using (Html.BeginForm())
+{
+    @:關鍵字： @Html.TextBox("txtKeyword","",new  { @class = "form-control"})
+    <input type="submit" value="查詢" />
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FUsername)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FNickname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEmail)
+            </th>
+            <th>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FNickname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEmail)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.FId">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

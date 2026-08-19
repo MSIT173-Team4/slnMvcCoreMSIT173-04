@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using prjMvcCore第四組.Models;
 using prjMvcCore第四組.ViewModels;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace prjMvcCore第四組.Controllers
 {
@@ -14,26 +15,43 @@ namespace prjMvcCore第四組.Controllers
         {
             db = context;
         }
-        public IActionResult List(CPostKeywordViewModel vm)
+        public IActionResult List(CPostKeywordViewModel vm, string sortBy = "latest")
         {
-            if (string.IsNullOrEmpty(vm.PostKeyword))
+            IQueryable<TPostTable> postsQuery = db.TPostTables.Include(p => p.FUser);
+            if (sortBy == "popular")
             {
-                var posts = db.TPostTables
-                .Include(p => p.FUser)
-                .Where(p => p.FPostState == 1)
-                .OrderByDescending(p => p.FPostDate)
-                .ToList();
-                return View(posts);
+                if (string.IsNullOrEmpty(vm.PostKeyword))
+                {
+                    postsQuery = postsQuery
+                        .Where(p => p.FPostState == 1)
+                        .OrderByDescending(p => (p.FLikes * 10) + p.FViews);
+                }
+                else
+                {
+                    postsQuery = postsQuery
+                        .Where(p => p.FPostState == 1 && p.FTitle.Contains(vm.PostKeyword))
+                        .OrderByDescending(p => (p.FLikes * 10) + p.FViews);
+                }
             }
             else
             {
-                var posts = db.TPostTables
-                .Include(p => p.FUser)
-                .Where( p => p.FPostState == 1 && p.FTitle.Contains(vm.PostKeyword))
-                .OrderByDescending(p => p.FPostDate)
-                .ToList();
-                return View(posts);
+                if (string.IsNullOrEmpty(vm.PostKeyword))
+                {
+                    postsQuery = postsQuery
+                        .Where(p => p.FPostState == 1)
+                        .OrderByDescending(p => p.FPostDate);
+                }
+                else
+                {
+                    postsQuery = postsQuery
+                        .Where( p => p.FPostState == 1 && p.FTitle.Contains(vm.PostKeyword))
+                        .OrderByDescending(p => p.FPostDate);
+                }
             }
+            var posts = postsQuery.ToList();
+            ViewBag.CurrentSort = sortBy;
+
+            return View(posts);
         }
 
         public IActionResult Detail(int? id)

@@ -87,7 +87,7 @@ public partial class MidprjDb2Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=midprjDb2;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=midprjDb2;Integrated Security=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -160,9 +160,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.ToTable("tBrand");
 
-            entity.Property(e => e.FBrandId)
-                .ValueGeneratedNever()
-                .HasColumnName("fBrandId");
+            entity.Property(e => e.FBrandId).HasColumnName("fBrandId");
             entity.Property(e => e.FBrandName)
                 .HasMaxLength(50)
                 .HasColumnName("fBrandName");
@@ -176,9 +174,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.HasIndex(e => e.FCode, "UQ_Coupon_Code").IsUnique();
 
-            entity.Property(e => e.FCouponId)
-                .ValueGeneratedNever()
-                .HasColumnName("fCouponId");
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponId");
             entity.Property(e => e.FCode)
                 .HasMaxLength(20)
                 .IsUnicode(false)
@@ -277,7 +273,6 @@ public partial class MidprjDb2Context : DbContext
             entity.Property(e => e.FPostId).HasColumnName("fPostID");
             entity.Property(e => e.FReplyMessageId).HasColumnName("fReplyMessageID");
             entity.Property(e => e.FUserId).HasColumnName("fUser_Id");
-            entity.Property(e => e.FViews).HasColumnName("fViews");
 
             entity.HasOne(d => d.FPost).WithMany(p => p.TMessageTables)
                 .HasForeignKey(d => d.FPostId)
@@ -393,9 +388,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.ToTable("tOrderDiscount");
 
-            entity.Property(e => e.FOrderDiscountId)
-                .ValueGeneratedNever()
-                .HasColumnName("fOrderDiscountId");
+            entity.Property(e => e.FOrderDiscountId).HasColumnName("fOrderDiscountId");
             entity.Property(e => e.FAppliedAmount)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("fAppliedAmount");
@@ -530,9 +523,7 @@ public partial class MidprjDb2Context : DbContext
 
             entity.ToTable("tProductImage");
 
-            entity.Property(e => e.FProductImageId)
-                .ValueGeneratedNever()
-                .HasColumnName("fProductImageID");
+            entity.Property(e => e.FProductImageId).HasColumnName("fProductImageID");
             entity.Property(e => e.FCreatedDate).HasColumnName("fCreatedDate");
             entity.Property(e => e.FImageUrl)
                 .HasMaxLength(255)
@@ -1008,7 +999,9 @@ public partial class MidprjDb2Context : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("Draft", "DF_Trip_Status")
                 .HasColumnName("fStatus");
-            entity.Property(e => e.FTripDate).HasColumnName("fTripDate");
+            entity.Property(e => e.FTripDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fTripDate");
             entity.Property(e => e.FTripName)
                 .HasMaxLength(100)
                 .HasColumnName("fTripName");
@@ -1019,7 +1012,6 @@ public partial class MidprjDb2Context : DbContext
 
             entity.HasOne(d => d.FUsers).WithMany(p => p.TTrips)
                 .HasForeignKey(d => d.FUsersId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Trip_Users_");
         });
 

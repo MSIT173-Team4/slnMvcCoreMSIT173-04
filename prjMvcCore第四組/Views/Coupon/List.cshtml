@@ -1,0 +1,161 @@
+﻿@model IEnumerable<prjMvcCore第四組.Models.CCouponWarp>
+
+@{
+    ViewData["Title"] = "優惠券清單";
+
+    var searchType = Context.Request.Query["SearchType"].ToString();
+    var txtKeyword = Context.Request.Query["txtKeyword"].ToString();
+    var scopeType = Context.Request.Query["ScopeType"].ToString();
+    var discountType = Context.Request.Query["DiscountType"].ToString();
+    var startDate = Context.Request.Query["StartDate"].ToString();
+    var endDate = Context.Request.Query["EndDate"].ToString();
+    var isActive = Context.Request.Query["IsActive"].ToString();
+    var minPurchaseAmountFrom = Context.Request.Query["MinPurchaseAmountFrom"].ToString();
+    var minPurchaseAmountTo = Context.Request.Query["MinPurchaseAmountTo"].ToString();
+    var maxDiscountAmountFrom = Context.Request.Query["MaxDiscountAmountFrom"].ToString();
+    var maxDiscountAmountTo = Context.Request.Query["MaxDiscountAmountTo"].ToString();
+}
+
+<h1>優惠券清單</h1>
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <form method="get" asp-action="List">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="SearchType" class="form-label fw-bold">搜尋條件</label>
+                    <select name="SearchType" id="SearchType" class="form-select">
+                        <option value="couponId" selected="@(searchType == "couponId")">優惠券編號</option>
+                        <option value="sellerId" selected="@(searchType == "sellerId")">商家編號</option>
+                        <option value="name" selected="@(searchType == "name")">優惠券名稱</option>
+                        <option value="code" selected="@(searchType == "code")">優惠碼</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="txtKeyword" class="form-label fw-bold">關鍵字</label>
+                    <input type="text" name="txtKeyword" id="txtKeyword" class="form-control"
+                           value="@txtKeyword" placeholder="請輸入搜尋關鍵字...">
+                </div>
+                <div class="col-md-2">
+                    <label for="IsActive" class="form-label fw-bold">狀態</label>
+                    <select name="IsActive" id="IsActive" class="form-select">
+                        <option value="">全部</option>
+                        <option value="true" selected="@(isActive == "true")">啟用</option>
+                        <option value="false" selected="@(isActive == "false")">停用</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-px-120 me-3">搜尋</button>
+                    <a asp-action="List" class="btn btn-secondary w-px-120 me-3">清除條件</a>
+                    <a asp-action="Create" class="btn btn-primary w-px-120">新增優惠卷</a>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-1">
+                <div class="col-md-3">
+                    <label for="ScopeType" class="form-label fw-bold">適用範圍</label>
+                    <input type="text" name="ScopeType" id="ScopeType" class="form-control"
+                           value="@scopeType" placeholder="不限">
+                </div>
+                <div class="col-md-3">
+                    <label for="DiscountType" class="form-label fw-bold">折抵類型</label>
+                    <input type="text" name="DiscountType" id="DiscountType" class="form-control"
+                           value="@discountType" placeholder="不限">
+                </div>
+                <div class="col-md-3">
+                    <label for="StartDate" class="form-label fw-bold">活動開始日(從)</label>
+                    <input type="date" name="StartDate" id="StartDate" class="form-control" value="@startDate">
+                </div>
+                <div class="col-md-3">
+                    <label for="EndDate" class="form-label fw-bold">活動結束日(到)</label>
+                    <input type="date" name="EndDate" id="EndDate" class="form-control" value="@endDate">
+                </div>
+            </div>
+
+            <div class="row g-3 mt-1">
+                <div class="col-md-3">
+                    <label for="MinPurchaseAmountFrom" class="form-label fw-bold">最低消費門檻(從)</label>
+                    <input type="number" step="0.01" name="MinPurchaseAmountFrom" id="MinPurchaseAmountFrom" class="form-control"
+                           value="@minPurchaseAmountFrom" placeholder="不限">
+                </div>
+                <div class="col-md-3">
+                    <label for="MinPurchaseAmountTo" class="form-label fw-bold">最低消費門檻(到)</label>
+                    <input type="number" step="0.01" name="MinPurchaseAmountTo" id="MinPurchaseAmountTo" class="form-control"
+                           value="@minPurchaseAmountTo" placeholder="不限">
+                </div>
+                <div class="col-md-3">
+                    <label for="MaxDiscountAmountFrom" class="form-label fw-bold">折抵上限(從)</label>
+                    <input type="number" step="0.01" name="MaxDiscountAmountFrom" id="MaxDiscountAmountFrom" class="form-control"
+                           value="@maxDiscountAmountFrom" placeholder="不限（含無上限）">
+                </div>
+                <div class="col-md-3">
+                    <label for="MaxDiscountAmountTo" class="form-label fw-bold">折抵上限(到)</label>
+                    <input type="number" step="0.01" name="MaxDiscountAmountTo" id="MaxDiscountAmountTo" class="form-control"
+                           value="@maxDiscountAmountTo" placeholder="不限（含無上限）">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-hover mt-3">
+    <thead>
+        <tr>
+            <th>折價券編號</th>
+            <th>商家編號</th>
+            <th>活動名稱</th>
+            <th>優惠碼</th>
+            <th>適用範圍</th>
+            <th>折抵類型</th>
+            <th>比例折抵值</th>
+            <th>最低消費門檻</th>
+            <th>折抵上限</th>
+            <th>活動開始日</th>
+            <th>活動結束日</th>
+            <th>優惠券狀態</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FCouponId</td>
+                    <td>@item.FSellerId</td>
+                    <td>@item.FName</td>
+                    <td>@item.FCode</td>
+                    <td>@item.FScopeType</td>
+                    <td>@item.FDiscountType</td>
+                    <td>@item.FDiscountValue</td>
+                    <td>@(item.FMinPurchaseAmount?.ToString() ?? "無門檻")</td>
+                    <td>@(item.FMaxDiscountAmount?.ToString() ?? "無上限")</td>
+                    <td>@item.FStartDate.ToString("yyyy/MM/dd")</td>
+                    <td>@(item.FEndDate?.ToString("yyyy/MM/dd") ?? "無期限")</td>
+                    <td>
+                        @if (item.FIsActive == true)
+                        {
+                            <form asp-action="ToggleStatus" asp-route-id="@item.FCouponId" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-warning">停用</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="ToggleStatus" asp-route-id="@item.FCouponId" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-success">啟用</button>
+                            </form>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.FCouponId" class="btn btn-sm btn-primary">編輯</a>
+                        <form asp-action="Delete" asp-route-id="@item.FCouponId" method="post" class="d-inline"
+                              onsubmit="return confirm('確定要刪除嗎?')">
+                            <button type="submit" class="btn btn-sm btn-danger">刪除</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

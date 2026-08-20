@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-4" style="max-width: 800px;">
+    <form asp-action="Create" method="post">
+        <div class="mb-4">
+            <label for="fTitle" class="form-label fs-4 fw-bold">文章標題</label>
+            <input type="text"
+                   id="fTitle"
+                   name="fTitle"
+                   class="form-control form-control-lg border-secondary"
+                   required />
+        </div>
+        <div class="mb-4">
+            <textarea id="fPostContent"
+                      name="fPostContent"
+                      class="form-control border-secondary"
+                      rows="12"
+                      placeholder="請輸入內容..."
+                      required></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-dark px-4 py-2 fs-5">
+                發佈貼文
+            </button>
+        </div>
+    </form>
+</div>

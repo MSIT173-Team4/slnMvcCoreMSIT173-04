@@ -17,7 +17,7 @@ namespace prjMvcCore第四組.Controllers
 
             MidprjDb2Context db = new MidprjDb2Context();
             IQueryable<TProduct> query = db.TProducts;
-
+        
             if (!string.IsNullOrEmpty(vm.txtKeyword))
             {
                 switch (vm.SearchType)
@@ -56,7 +56,7 @@ namespace prjMvcCore第四組.Controllers
         .ToList()
         .Select(t => new CProductWrap { product = t })
         .ToList();
-
+         
             return View(wrapList);
         }
 

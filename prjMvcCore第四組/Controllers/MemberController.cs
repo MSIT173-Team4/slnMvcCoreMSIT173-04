@@ -15,7 +15,7 @@ namespace prjMvcCore第四組.Controllers
         {
             _env = env;
         }
-    public IActionResult Index(string? txtKeyword)
+    public IActionResult Index(string? txtKeyword,string? searchType)
     {
             
             MidprjDb2Context db=new MidprjDb2Context();
@@ -26,7 +26,14 @@ namespace prjMvcCore第四組.Controllers
             }
             else
             {
-                data = db.TUsers.Where(t=>t.FNickname.Contains(txtKeyword));
+                if (searchType == "Nickname")
+                {
+                    data = db.TUsers.Where(t => t.FNickname.Contains(txtKeyword));
+                }
+                else if (searchType == "Username")
+                {
+                    data = db.TUsers.Where(t => t.FUsername.Contains(txtKeyword));
+                }
             }
             return View(data);
     }

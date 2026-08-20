@@ -53,7 +53,35 @@ namespace prjMvcCore第四組.Controllers
 
             return View(posts);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
 
+        public IActionResult Create(string fTitle, string fPostContent)
+        {
+            if (string.IsNullOrWhiteSpace(fTitle) || string.IsNullOrWhiteSpace(fPostContent))
+            {
+                ModelState.AddModelError("", "請輸入標題與內容");
+                return View();
+            }
+            var newPost = new TPostTable
+            {
+                FUserId = 1,
+                FTitle = fTitle,
+                FPostContent = fPostContent,
+                FLikes = 0,
+                FViews = 0,
+                FPostDate = DateTime.Now,
+                FPostState = 1
+            };
+
+            db.TPostTables.Add(newPost);
+            db.SaveChanges();
+
+            return RedirectToAction("List");
+        }
         public IActionResult Detail(int? id)
         {
             var post = db.TPostTables

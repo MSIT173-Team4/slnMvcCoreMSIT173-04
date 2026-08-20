@@ -146,7 +146,13 @@ namespace prjMvcCore第四組.Controllers
             };
 
             db.TMessageTables.Add(newMessage);
+            TPostTable correctViews = db.TPostTables.FirstOrDefault(t => t.FPostId == postId);
+            if (correctViews != null)
+            {
+                correctViews.FViews--;
+            }
             db.SaveChanges();
+            TempData["FocusAction"] = "CommentAdded";
 
             return RedirectToAction(nameof(Detail), new { id = postId });
         }
@@ -168,6 +174,11 @@ namespace prjMvcCore第四組.Controllers
             if (messageState != null)
             {
                 messageState.FMessageState = 0;
+                TPostTable correctViews = db.TPostTables.FirstOrDefault(t => t.FPostId == postId);
+                if (correctViews != null)
+                {
+                    correctViews.FViews--;
+                }
                 db.SaveChanges();
             }
 

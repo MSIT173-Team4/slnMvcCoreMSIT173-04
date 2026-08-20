@@ -78,8 +78,8 @@ namespace prjMvcCore第四組.Controllers
             if (id == null) return RedirectToAction("Index");
             MidprjDb2Context db = new MidprjDb2Context();
             TUser data = db.TUsers.FirstOrDefault(t => t.FId == id);
-            TPostTable pdata = db.TPostTables.FirstOrDefault(t => t.FUserId == id);
-            TRecipe rdata = db.TRecipes.FirstOrDefault(t => t.FAuthorUserId == id);
+            var pdata = db.TPostTables.Where(t => t.FUserId == id).ToList();
+            var rdata = db.TRecipes.Where(t=>t.FAuthorUserId == id).ToList();
             if (data == null) return RedirectToAction("Index");
             ViewBag.User = data;
             ViewBag.Post = pdata;

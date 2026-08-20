@@ -33,8 +33,7 @@ namespace prjMvcCoreMSIC173.Controllers
                 .Where(x => x.FId == 4 || x.FId == 5)
                 .ToList();
 
-            // 這裡查這個 Seller 的商品
-            // 下面假設 TProduct 有 FUserId 可以對應商家
+
             ViewBag.Products = db.TProducts
                 .Where(x => x.FSellerId == seller.FId)
                 .ToList();
@@ -54,7 +53,7 @@ namespace prjMvcCoreMSIC173.Controllers
                 return NotFound();
             }
 
-            // 只允許 4、5
+    
             if (status != 4 && status != 5)
             {
                 return BadRequest();

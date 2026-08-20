@@ -107,6 +107,31 @@
                 </div>
 
             </div>
+            <hr/>
+
+            <div class="container">
+                <div class="row">
+                   
+                @if(products!=null&&products.Any()){
+                    foreach(var p in products){
+                            <div class="col-lg-3">
+                        <div class="card" style="width: 18rem;">
+                          <img src="..." class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <h5 class="card-title">@p.FProductname</h5>
+                            <p class="card-text">@p.FDescription</p>
+                            <p>
+                                <strong>價格：</strong>
+                                @p.FPrice
+                            </p>
+                          </div>
+                        </div>
+                                </div>
+                    }
+                        }
+                    
+                </div>
+            </div>
 
         </div>
 

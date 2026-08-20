@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "商品清單";
-
+    
     var searchType = Context.Request.Query["SearchType"].ToString();
     var txtKeyword = Context.Request.Query["txtKeyword"].ToString();
     var minStock = Context.Request.Query["MinStock"].ToString();
@@ -91,6 +91,7 @@
                     <td>@item.FStock</td>
                     <td>@item.FProductStatusText</td>
                     <td>
+                        
                         @if (item.FProductStatus == 1)
                         {
                             <form asp-action="ToggleStatus" asp-route-id="@item.FProductId" method="post" class="d-inline">
@@ -103,10 +104,13 @@
                                 <button type="submit" class="btn btn-sm btn-success">上架</button>
                             </form>
                         }
+
+
                         else
                         {
                             <button type="button" class="btn btn-sm btn-secondary" disabled>@item.FProductStatusText</button>
                         }
+                        
                         <a asp-action="Edit" asp-route-id="@item.FProductId" class="btn btn-sm btn-primary">編輯</a>
                         <a asp-action="Delete" asp-route-id="@item.FProductId" class="btn btn-sm btn-danger" onclick="return confirm('確定要刪除嗎?')">刪除</a>
                     </td>
